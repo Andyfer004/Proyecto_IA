@@ -1,0 +1,610 @@
+[
+  {
+    "codigo": "CC2005",
+    "nombre": "Curso CC2005",
+    "semestre": [
+      1,
+      2
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU174",
+    "nombre": "Curso CU174",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU176",
+    "nombre": "Curso CU176",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU178",
+    "nombre": "Curso CU178",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "QQ2018",
+    "nombre": "Curso QQ2018",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC2007",
+    "nombre": "Curso CC2007",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU169",
+    "nombre": "Curso CU169",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM2028",
+    "nombre": "Curso MM2028",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC2005"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "FF2016",
+    "nombre": "Curso FF2016",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CU174"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC2008",
+    "nombre": "Curso CC2008",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CU176"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU170",
+    "nombre": "Curso CU170",
+    "semestre": [
+      1,
+      2
+    ],
+    "prerequisitos": [
+      "CU178"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU171",
+    "nombre": "Curso CU171",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "QQ2018"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM2002",
+    "nombre": "Curso MM2002",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC2007"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM2001",
+    "nombre": "Curso MM2001",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "MM2028"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU172",
+    "nombre": "Curso CU172",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "FF2016"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU173",
+    "nombre": "Curso CU173",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC2008"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3054",
+    "nombre": "Curso CC3054",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CU170"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "FF2017",
+    "nombre": "Curso FF2017",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CU171"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC2016",
+    "nombre": "Curso CC2016",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "MM2002"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "FF2018",
+    "nombre": "Curso FF2018",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "MM2001"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3086",
+    "nombre": "Curso CC3086",
+    "semestre": [
+      1,
+      2
+    ],
+    "prerequisitos": [
+      "CU172"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3087",
+    "nombre": "Curso CC3087",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CU173"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM2029",
+    "nombre": "Curso MM2029",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3054"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU175",
+    "nombre": "Curso CU175",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "FF2017"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM2015",
+    "nombre": "Curso MM2015",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC2016"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "TD2020",
+    "nombre": "Curso TD2020",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "FF2018"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM3014",
+    "nombre": "Curso MM3014",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3086"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3059",
+    "nombre": "Curso CC3059",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3087"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3062",
+    "nombre": "Curso CC3062",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "MM2029"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3088",
+    "nombre": "Curso CC3088",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CU175"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3090",
+    "nombre": "Curso CC3090",
+    "semestre": [
+      1,
+      2
+    ],
+    "prerequisitos": [
+      "MM2015"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3091",
+    "nombre": "Curso CC3091",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "TD2020"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC2018",
+    "nombre": "Curso CC2018",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "MM3014"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC2019",
+    "nombre": "Curso CC2019",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3059"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "MM3032",
+    "nombre": "Curso MM3032",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3062"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU177",
+    "nombre": "Curso CU177",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3088"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CU193",
+    "nombre": "Curso CU193",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3090"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3041",
+    "nombre": "Curso CC3041",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3091"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3064",
+    "nombre": "Curso CC3064",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC2018"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3085",
+    "nombre": "Curso CC3085",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC2019"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3089",
+    "nombre": "Curso CC3089",
+    "semestre": [
+      1,
+      2
+    ],
+    "prerequisitos": [
+      "MM3032"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3071",
+    "nombre": "Curso CC3071",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CU177"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3074",
+    "nombre": "Curso CC3074",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CU193"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3084",
+    "nombre": "Curso CC3084",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3041"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC2017",
+    "nombre": "Curso CC2017",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3064"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3092",
+    "nombre": "Curso CC3092",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3085"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3067",
+    "nombre": "Curso CC3067",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3089"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3069",
+    "nombre": "Curso CC3069",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3071"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3032",
+    "nombre": "Curso CC3032",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3074"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3037",
+    "nombre": "Curso CC3037",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3084"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3043",
+    "nombre": "Curso CC3043",
+    "semestre": [
+      1,
+      2
+    ],
+    "prerequisitos": [
+      "CC2017"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "TD2020",
+    "nombre": "Curso TD2020",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3092"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3093",
+    "nombre": "Curso CC3093",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3067"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3100",
+    "nombre": "Curso CC3100",
+    "semestre": [
+      1
+    ],
+    "prerequisitos": [
+      "CC3069"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC4012",
+    "nombre": "Curso CC4012",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3037"
+    ],
+    "correquisitos": []
+  },
+  {
+    "codigo": "CC3047",
+    "nombre": "Curso CC3047",
+    "semestre": [
+      2
+    ],
+    "prerequisitos": [
+      "CC3043"
+    ],
+    "correquisitos": []
+  }
+]
