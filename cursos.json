@@ -1,7 +1,7 @@
 [
   {
     "codigo": "CC2005",
-    "nombre": "Curso CC2005",
+    "nombre": "Algoritmos y Programaci\u00f3n B\u00e1sica",
     "semestre": [
       1,
       2
@@ -11,7 +11,7 @@
   },
   {
     "codigo": "CU174",
-    "nombre": "Curso CU174",
+    "nombre": "Ciencias de la Vida",
     "semestre": [
       1
     ],
@@ -20,7 +20,7 @@
   },
   {
     "codigo": "CU176",
-    "nombre": "Curso CU176",
+    "nombre": "Comunicaci\u00f3n Efectiva",
     "semestre": [
       1
     ],
@@ -29,7 +29,7 @@
   },
   {
     "codigo": "CU178",
-    "nombre": "Curso CU178",
+    "nombre": "Coaching para la Excelencia",
     "semestre": [
       1
     ],
@@ -38,7 +38,7 @@
   },
   {
     "codigo": "QQ2018",
-    "nombre": "Curso QQ2018",
+    "nombre": "Qu\u00edmica General",
     "semestre": [
       1
     ],
@@ -47,7 +47,7 @@
   },
   {
     "codigo": "CC2007",
-    "nombre": "Curso CC2007",
+    "nombre": "Intro a Ingenier\u00eda en Computaci\u00f3n",
     "semestre": [
       1
     ],
@@ -56,7 +56,7 @@
   },
   {
     "codigo": "CU169",
-    "nombre": "Curso CU169",
+    "nombre": "Pensamiento Cuantitativo",
     "semestre": [
       1
     ],
@@ -65,7 +65,7 @@
   },
   {
     "codigo": "MM2028",
-    "nombre": "Curso MM2028",
+    "nombre": "C\u00e1lculo 1",
     "semestre": [
       2
     ],
@@ -76,7 +76,7 @@
   },
   {
     "codigo": "FF2016",
-    "nombre": "Curso FF2016",
+    "nombre": "F\u00edsica 1",
     "semestre": [
       2
     ],
@@ -87,7 +87,7 @@
   },
   {
     "codigo": "CC2008",
-    "nombre": "Curso CC2008",
+    "nombre": "Programaci\u00f3n Orientada a Objetos",
     "semestre": [
       2
     ],
@@ -98,7 +98,7 @@
   },
   {
     "codigo": "CU170",
-    "nombre": "Curso CU170",
+    "nombre": "Estad\u00edstica 1",
     "semestre": [
       1,
       2
@@ -110,7 +110,7 @@
   },
   {
     "codigo": "CU171",
-    "nombre": "Curso CU171",
+    "nombre": "Ciudadan\u00eda Global",
     "semestre": [
       2
     ],
@@ -121,7 +121,7 @@
   },
   {
     "codigo": "MM2002",
-    "nombre": "Curso MM2002",
+    "nombre": "\u00c1lgebra Lineal 1",
     "semestre": [
       2
     ],
@@ -132,7 +132,7 @@
   },
   {
     "codigo": "MM2001",
-    "nombre": "Curso MM2001",
+    "nombre": "C\u00e1lculo 2",
     "semestre": [
       1
     ],
@@ -143,7 +143,7 @@
   },
   {
     "codigo": "CU172",
-    "nombre": "Curso CU172",
+    "nombre": "Guatemala en el Contexto Mundial",
     "semestre": [
       1
     ],
@@ -154,7 +154,7 @@
   },
   {
     "codigo": "CU173",
-    "nombre": "Curso CU173",
+    "nombre": "Retos Ambientales",
     "semestre": [
       1
     ],
@@ -165,7 +165,7 @@
   },
   {
     "codigo": "CC3054",
-    "nombre": "Curso CC3054",
+    "nombre": "Arquitectura y Ensamblador",
     "semestre": [
       1
     ],
@@ -176,7 +176,7 @@
   },
   {
     "codigo": "FF2017",
-    "nombre": "Curso FF2017",
+    "nombre": "F\u00edsica 2",
     "semestre": [
       1
     ],
@@ -187,7 +187,7 @@
   },
   {
     "codigo": "CC2016",
-    "nombre": "Curso CC2016",
+    "nombre": "Estructuras de Datos",
     "semestre": [
       1
     ],
@@ -198,7 +198,7 @@
   },
   {
     "codigo": "FF2018",
-    "nombre": "Curso FF2018",
+    "nombre": "F\u00edsica 3",
     "semestre": [
       2
     ],
@@ -209,7 +209,7 @@
   },
   {
     "codigo": "CC3086",
-    "nombre": "Curso CC3086",
+    "nombre": "Microprocesadores",
     "semestre": [
       1,
       2
@@ -221,7 +221,7 @@
   },
   {
     "codigo": "CC3087",
-    "nombre": "Curso CC3087",
+    "nombre": "Plataformas M\u00f3viles",
     "semestre": [
       2
     ],
@@ -232,7 +232,7 @@
   },
   {
     "codigo": "MM2029",
-    "nombre": "Curso MM2029",
+    "nombre": "Ecuaciones Diferenciales",
     "semestre": [
       2
     ],
@@ -243,7 +243,7 @@
   },
   {
     "codigo": "CU175",
-    "nombre": "Curso CU175",
+    "nombre": "Investigaci\u00f3n Cient\u00edfica",
     "semestre": [
       2
     ],
@@ -254,7 +254,7 @@
   },
   {
     "codigo": "MM2015",
-    "nombre": "Curso MM2015",
+    "nombre": "Matem\u00e1tica Discreta",
     "semestre": [
       2
     ],
@@ -265,7 +265,7 @@
   },
   {
     "codigo": "TD2020",
-    "nombre": "Curso TD2020",
+    "nombre": "Science of Happiness",
     "semestre": [
       1
     ],
@@ -276,7 +276,7 @@
   },
   {
     "codigo": "MM3014",
-    "nombre": "Curso MM3014",
+    "nombre": "Teor\u00eda de Probabilidades",
     "semestre": [
       1
     ],
@@ -287,7 +287,7 @@
   },
   {
     "codigo": "CC3059",
-    "nombre": "Curso CC3059",
+    "nombre": "Interacci\u00f3n Humano Computador",
     "semestre": [
       1
     ],
@@ -298,7 +298,7 @@
   },
   {
     "codigo": "CC3062",
-    "nombre": "Curso CC3062",
+    "nombre": "Tecnolog\u00edas Web",
     "semestre": [
       1
     ],
@@ -309,7 +309,7 @@
   },
   {
     "codigo": "CC3088",
-    "nombre": "Curso CC3088",
+    "nombre": "Base de Datos 1",
     "semestre": [
       1
     ],
@@ -320,7 +320,7 @@
   },
   {
     "codigo": "CC3090",
-    "nombre": "Curso CC3090",
+    "nombre": "Ingenier\u00eda de Software 1",
     "semestre": [
       1,
       2
@@ -332,7 +332,7 @@
   },
   {
     "codigo": "CC3091",
-    "nombre": "Curso CC3091",
+    "nombre": "Ingenier\u00eda de Software 2",
     "semestre": [
       2
     ],
@@ -343,7 +343,7 @@
   },
   {
     "codigo": "CC2018",
-    "nombre": "Curso CC2018",
+    "nombre": "Gr\u00e1ficas por Computadora",
     "semestre": [
       2
     ],
@@ -354,7 +354,7 @@
   },
   {
     "codigo": "CC2019",
-    "nombre": "Curso CC2019",
+    "nombre": "Teor\u00eda de la Computaci\u00f3n",
     "semestre": [
       2
     ],
@@ -365,7 +365,7 @@
   },
   {
     "codigo": "MM3032",
-    "nombre": "Curso MM3032",
+    "nombre": "L\u00f3gica Matem\u00e1tica",
     "semestre": [
       2
     ],
@@ -376,7 +376,7 @@
   },
   {
     "codigo": "CU177",
-    "nombre": "Curso CU177",
+    "nombre": "Emprendimiento",
     "semestre": [
       2
     ],
@@ -387,7 +387,7 @@
   },
   {
     "codigo": "CU193",
-    "nombre": "Curso CU193",
+    "nombre": "Confianza Creativa",
     "semestre": [
       2
     ],
@@ -398,7 +398,7 @@
   },
   {
     "codigo": "CC3041",
-    "nombre": "Curso CC3041",
+    "nombre": "An\u00e1lisis y Dise\u00f1o de Algoritmos",
     "semestre": [
       1
     ],
@@ -409,7 +409,7 @@
   },
   {
     "codigo": "CC3064",
-    "nombre": "Curso CC3064",
+    "nombre": "Sistemas Operativos",
     "semestre": [
       1
     ],
@@ -420,7 +420,7 @@
   },
   {
     "codigo": "CC3085",
-    "nombre": "Curso CC3085",
+    "nombre": "Inteligencia Artificial",
     "semestre": [
       1
     ],
@@ -431,7 +431,7 @@
   },
   {
     "codigo": "CC3089",
-    "nombre": "Curso CC3089",
+    "nombre": "Base de Datos 2",
     "semestre": [
       1,
       2
@@ -443,7 +443,7 @@
   },
   {
     "codigo": "CC3071",
-    "nombre": "Curso CC3071",
+    "nombre": "Dise\u00f1o de Lenguajes",
     "semestre": [
       1
     ],
@@ -454,7 +454,7 @@
   },
   {
     "codigo": "CC3074",
-    "nombre": "Curso CC3074",
+    "nombre": "Miner\u00eda de Datos",
     "semestre": [
       1
     ],
@@ -465,7 +465,7 @@
   },
   {
     "codigo": "CC3084",
-    "nombre": "Curso CC3084",
+    "nombre": "Data Science",
     "semestre": [
       2
     ],
@@ -476,7 +476,7 @@
   },
   {
     "codigo": "CC2017",
-    "nombre": "Curso CC2017",
+    "nombre": "Modelaci\u00f3n y Simulaci\u00f3n",
     "semestre": [
       2
     ],
@@ -487,7 +487,7 @@
   },
   {
     "codigo": "CC3092",
-    "nombre": "Curso CC3092",
+    "nombre": "Deep Learning",
     "semestre": [
       2
     ],
@@ -498,7 +498,7 @@
   },
   {
     "codigo": "CC3067",
-    "nombre": "Curso CC3067",
+    "nombre": "Redes",
     "semestre": [
       2
     ],
@@ -509,7 +509,7 @@
   },
   {
     "codigo": "CC3069",
-    "nombre": "Curso CC3069",
+    "nombre": "Computaci\u00f3n Paralela",
     "semestre": [
       2
     ],
@@ -520,7 +520,7 @@
   },
   {
     "codigo": "CC3032",
-    "nombre": "Curso CC3032",
+    "nombre": "Compiladores",
     "semestre": [
       2
     ],
@@ -531,7 +531,7 @@
   },
   {
     "codigo": "CC3037",
-    "nombre": "Curso CC3037",
+    "nombre": "Seguridad de Sistemas",
     "semestre": [
       1
     ],
@@ -542,7 +542,7 @@
   },
   {
     "codigo": "CC3043",
-    "nombre": "Curso CC3043",
+    "nombre": "Gesti\u00f3n de Proyectos TI",
     "semestre": [
       1,
       2
@@ -554,7 +554,7 @@
   },
   {
     "codigo": "TD2020",
-    "nombre": "Curso TD2020",
+    "nombre": "Science of Happiness",
     "semestre": [
       1
     ],
@@ -565,7 +565,7 @@
   },
   {
     "codigo": "CC3093",
-    "nombre": "Curso CC3093",
+    "nombre": "Pr\u00e1ctica Profesional",
     "semestre": [
       1
     ],
@@ -576,7 +576,7 @@
   },
   {
     "codigo": "CC3100",
-    "nombre": "Curso CC3100",
+    "nombre": "Dise\u00f1o e Innovaci\u00f3n",
     "semestre": [
       1
     ],
@@ -587,7 +587,7 @@
   },
   {
     "codigo": "CC4012",
-    "nombre": "Curso CC4012",
+    "nombre": "Trabajo de Graduaci\u00f3n",
     "semestre": [
       2
     ],
@@ -598,7 +598,7 @@
   },
   {
     "codigo": "CC3047",
-    "nombre": "Curso CC3047",
+    "nombre": "Administraci\u00f3n de Sistemas",
     "semestre": [
       2
     ],
