@@ -1,70 +1,56 @@
-# utils.py
 
-def contar_dependencias(curso_nombre, cursos):
-    count = 0
-    for curso in cursos:
-        if curso_nombre in curso["prerequisitos"]:
-            count += 1
-    return count
+# csp_utils.py
 
-def ordenar_por_importancia(candidatos, cursos):
-    importancia = {c: contar_dependencias(c, cursos) for c in candidatos}
-    return sorted(candidatos, key=lambda x: importancia[x], reverse=True)
+import json
 
-def filtrar_por_semestre(cursos, semestre):
-    return [c for c in cursos if semestre in c["semestre"]]
+def cargar_cursos(path="cursos.json"):
+    with open(path, "r") as f:
+        cursos = json.load(f)
+        for c in cursos:
+            c["semestre"] = [(c["anio"]-1)*2 + c["ciclo"]]
+        return cursos
 
-def filtrar_aprobados(cursos, aprobados):
-    return [c for c in cursos if c["nombre"] not in aprobados]
+def cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos, por_aprobar=None):
+    nombre_a_codigo = {c["nombre"]: c["codigo"] for c in cursos}
+    codigo_a_nombre = {c["codigo"]: c["nombre"] for c in cursos}
 
+    aprobados = [nombre_a_codigo[n] for n in aprobados_nombres if n in nombre_a_codigo]
+    if por_aprobar:
+        por_aprobar_codes = [nombre_a_codigo[n] for n in por_aprobar if n in nombre_a_codigo]
+        aprobados += por_aprobar_codes
 
-# ——— Nuevas funcionalidades ———
+    prox_ciclo = 2 if ciclo_actual == 1 else 1
 
-import networkx as nx
-from pyvis.network import Network
+    cursos_prox_ciclo = [
+        c for c in cursos 
+        if c["ciclo"] == prox_ciclo 
+        and c["codigo"] not in aprobados
+        and all(pr in aprobados for pr in c["requisitos"])
+    ]
 
-def construir_grafo(cursos):
-    G = nx.DiGraph()
-    for c in cursos:
-        G.add_node(c["codigo"], label=c["nombre"])
-        for pr in c["prerequisitos"]:
-            G.add_edge(pr, c["codigo"])
-    return G
+    if len(cursos_prox_ciclo) < max_cursos:
+        cursos_alternativos = [
+            c for c in cursos
+            if c["codigo"] not in aprobados
+            and c["ciclo"] != prox_ciclo
+            and all(pr in aprobados for pr in c["requisitos"])
+            and c not in cursos_prox_ciclo
+        ]
+        cursos_alternativos = ordenar_por_importancia(
+            [c["codigo"] for c in cursos_alternativos], cursos)
+        cursos_alternativos = [next(c for c in cursos if c["codigo"] == cod) 
+                             for cod in cursos_alternativos]
 
-def mostrar_grafo_pyvis(G, output="grafo.html"):
-    """
-    Genera un archivo HTML con la visualización del grafo PyVis
-    sin usar el modo notebook (evita errores de template).
-    Devuelve la ruta al archivo generado.
-    """
-    from pyvis.network import Network
+        cursos_prox_ciclo.extend(cursos_alternativos[:max_cursos - len(cursos_prox_ciclo)])
 
-    # Crear red dirigida con tamaño fijo
-    net = Network(height="600px", width="100%", directed=True)
-    net.from_nx(G)
+    cursos_ordenados = ordenar_por_importancia(
+        [c["codigo"] for c in cursos_prox_ciclo], cursos)
+    return [codigo_a_nombre[c] for c in cursos_ordenados[:max_cursos]]
 
-    # Escribir HTML sin intentar abrir navegador ni modo notebook
-    net.write_html(output, open_browser=False, notebook=False)
-    return output
-
-
-def alertas_riesgo(plan, max_cursos):
-    avisos = []
-    for etapa in plan:
-        if len(etapa["cursos"]) < max_cursos:
-            avisos.append(
-                f"Ciclo {etapa['ciclo']}: riesgo de atraso (solo {len(etapa['cursos'])} cursos)."
-            )
-    return avisos
-
-def predecir_graduacion(cursos, aprobados_nombres, ciclo_actual, max_cursos):
-    from simulador import simular_avance
-
-    plan = simular_avance(cursos, aprobados_nombres, ciclo_actual, max_cursos, n_ciclos=20)
-    acumulado = set(aprobados_nombres)
-    total = set(c["nombre"] for c in cursos)
-    for etapa in plan:
-        acumulado.update(etapa["cursos"])
-        if total <= acumulado:
-            return etapa["ciclo"]
-    return None
+def validar_manual(cursos, seleccion_manual):
+    validos = []
+    for code in seleccion_manual:
+        curso = next(c for c in cursos if c["codigo"] == code)
+        if all(pr in seleccion_manual for pr in curso["requisitos"]):
+            validos.append(curso["nombre"])
+    return validos
