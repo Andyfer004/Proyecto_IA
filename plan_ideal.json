@@ -1,0 +1,52 @@
+[
+  {
+    "anio": 1,
+    "semestre": 1,
+    "cursos": ["CC2005", "CU174", "CU176", "CU178", "QQ2018", "CC2007", "CU169"]
+  },
+  {
+    "anio": 1,
+    "semestre": 2,
+    "cursos": ["MM2028", "FF2016", "CC2008", "CU170", "CU171","MM2002"]
+  },
+  {
+    "anio": 2,
+    "semestre": 1,
+    "cursos": ["MM2001", "CU172", "CU173", "CC3054", "FF2017","CC2016"]
+  },
+  {
+    "anio": 2,
+    "semestre": 2,
+    "cursos": ["FF2018", "CC3086", "CC3087","MM2029","CU175","MM2015"]
+  },
+  {
+    "anio": 3,
+    "semestre": 1,
+    "cursos": ["TD2020", "MM3014", "CC3059","CC3062","CC3088","CC3090"]
+  },
+  {
+    "anio": 3,
+    "semestre": 2,
+    "cursos": ["CC3091", "CC2018", "CC2019","MM3032","CU177","CU193"]
+  },
+  {
+    "anio": 4,
+    "semestre": 1,
+    "cursos": ["CC3041", "CC3064", "CC3085","CC3089","CC3071","CC3074"]
+  },
+  {
+    "anio": 4,
+    "semestre": 2,
+    "cursos": ["CC3084", "CC2017", "CC3092","CC3067","CC3069","CC3032"]
+  },
+  {
+    "anio": 5,
+    "semestre": 1,
+    "cursos": ["CC3037", "CC3043", "TD2020","CC3093"]
+  },
+  {
+    "anio": 5,
+    "semestre": 2,
+    "cursos": ["CC3100","CC4012","CC3047"]
+  }
+]
