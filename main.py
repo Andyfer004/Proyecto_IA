@@ -4,11 +4,11 @@ import json
 import streamlit as st
 import streamlit.components.v1 as components
 
-from csp_solver import cargar_cursos, cursos_validos, validar_manual
+from csp_solver import cargar_plan_ideal,cargar_cursos, cursos_validos, validar_manual
 from simulador import simular_avance
 from utils import (
     construir_grafo, mostrar_grafo_pyvis,
-    alertas_riesgo, predecir_graduacion
+    alertas_riesgo, predecir_graduacion,ruta_optima_vs_plan_ideal
 )
 
 st.set_page_config(page_title="Planificador Académico", layout="centered")
@@ -19,15 +19,23 @@ cursos = cargar_cursos()
 todos_nombres = [c["nombre"] for c in cursos]
 todos_codigos = [c["codigo"] for c in cursos]
 
+# Carga de Plan Ideal
+plan_ideal = cargar_plan_ideal()
+
 # Inputs del usuario
 aprobados = st.multiselect("Selecciona los cursos que ya aprobaste:", todos_nombres)
+anio_actual = st.selectbox("¿En qué año académico estás?", [1, 2, 3, 4, 5])
 ciclo_actual = st.selectbox("¿Qué ciclo académico viene?", [1, 2])
 max_cursos = st.slider("¿Cuántos cursos planeas llevar por ciclo?", 1, 6, 3)
+
+
+ciclo_absoluto = (anio_actual - 1) * 2 + ciclo_actual  
 
 modo = st.radio("Modo de recomendación", [
     "Solo próximo ciclo",
     "Simular varios ciclos",
-    "Asistida"
+    "Asistida",
+    "Comparación Con Plan Ideal"
 ])
 
 # Botón principal
@@ -47,12 +55,48 @@ if st.button("🎯 Recomendar cursos"):
         if avisos:
             st.warning("\n".join(avisos))
 
-    else:  # Asistida
+    elif modo == "Asistida":  # Asistida
         manual = st.multiselect("Elige cursos (por código):", todos_codigos)
         val = validar_manual(cursos, manual)
         st.subheader("✅ Cursos válidos según prerequisitos:")
         st.write(val or "Ninguno cumple prerequisitos.")
 
+    elif modo == "Comparación Con Plan Ideal":
+        nombre_a_codigo = {c["nombre"]: c["codigo"] for c in cursos}
+        aprobados_codigos = [nombre_a_codigo[n] for n in aprobados if n in nombre_a_codigo]
+
+        plan, retrasados = ruta_optima_vs_plan_ideal(
+            cursos, plan_ideal, aprobados_codigos, ciclo_absoluto, max_cursos
+        )
+        
+        codigo_a_nombre = {c["codigo"]: c["nombre"] for c in cursos}
+        st.subheader("📈 Plan óptimo simulado desde tu situación actual:")
+        for etapa in plan:
+            anio = (etapa['ciclo'] - 1) // 2 + 1
+            semestre = 1 if etapa['ciclo'] % 2 == 1 else 2
+            detalles = [f"`{c}` {codigo_a_nombre.get(c, 'Nombre desconocido')}" for c in etapa["cursos"]]
+
+            st.markdown(f"### 🗓️ Año {anio} Semestre {semestre} (Ciclo {etapa['ciclo']})")
+            if detalles:
+                st.markdown("\n".join([f"- {d}" for d in detalles]))
+            else:
+                st.info("Sin cursos asignados para este ciclo.")
+
+        if retrasados:
+            st.subheader("⚠️ Cursos que irían atrasados respecto al plan ideal:")
+            for r in retrasados:
+                anio_i = (r['ciclo_ideal'] - 1) // 2 + 1
+                sem_i = 1 if r['ciclo_ideal'] % 2 == 1 else 2
+                anio_r = (r['ciclo_real'] - 1) // 2 + 1
+                sem_r = 1 if r['ciclo_real'] % 2 == 1 else 2
+                st.markdown(
+                    f"- `{r['codigo']}` {r['nombre']}: ideal Año {anio_i} Sem {sem_i} (Ciclo {r['ciclo_ideal']}), "
+                    f"real Año {anio_r} Sem {sem_r} (Ciclo {r['ciclo_real']})"
+                )
+        else:
+            st.success("🎉 ¡No hay cursos atrasados! Vas bien con respecto al plan ideal.")
+
+        
 # Grafo de prerequisitos
 if st.button("📊 Ver grafo de prerequisitos"):
     G = construir_grafo(cursos)

@@ -6,6 +6,10 @@ from utils import filtrar_por_semestre, filtrar_aprobados, ordenar_por_importanc
 def cargar_cursos(path="cursos.json"):
     with open(path, "r") as f:
         return json.load(f)
+    
+def cargar_plan_ideal(path="plan_ideal.json"):
+    with open(path, "r") as f:
+        return json.load(f)
 
 def cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos):
     # 1) Mapeo nombre⇄código

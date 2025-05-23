@@ -68,3 +68,54 @@ def predecir_graduacion(cursos, aprobados_nombres, ciclo_actual, max_cursos):
         if total <= acumulado:
             return etapa["ciclo"]
     return None
+
+
+def ruta_optima_vs_plan_ideal(cursos, plan_ideal, aprobados_codigos, ciclo_absoluto, max_cursos, n_ciclos=20):
+    curso_dict = {c["codigo"]: c for c in cursos}
+    plan_por_curso = {
+        codigo: (bloque["anio"], bloque["semestre"])
+        for bloque in plan_ideal
+        for codigo in bloque["cursos"]
+    }
+
+    historial = set(aprobados_codigos)
+    plan = []
+
+    for ciclo_index in range(ciclo_absoluto, ciclo_absoluto + n_ciclos):
+        semestre = 1 if ciclo_index % 2 == 1 else 2
+
+        dispo = [
+            c for c in cursos
+            if semestre in c["semestre"] and c["codigo"] not in historial
+        ]
+        elegibles = [
+            c for c in dispo
+            if all(pr in historial for pr in c["prerequisitos"])
+        ]
+
+        seleccion = [c["codigo"] for c in elegibles][:max_cursos]
+        plan.append({"ciclo": ciclo_index, "cursos": seleccion})
+        historial.update(seleccion)
+
+        if len(historial) == len(cursos):
+            break
+
+    # Comparar contra plan ideal
+    cursos_simulados = {}
+    for etapa in plan:
+        for c in etapa["cursos"]:
+            cursos_simulados[c] = etapa["ciclo"]
+
+    retrasados = []
+    for c, (anio, semestre) in plan_por_curso.items():
+        ciclo_ideal = (anio - 1) * 2 + semestre
+        ciclo_real = cursos_simulados.get(c)
+        if ciclo_real is not None and ciclo_real > ciclo_ideal:
+            retrasados.append({
+                "codigo": c,
+                "nombre": curso_dict[c]["nombre"],
+                "ciclo_ideal": ciclo_ideal,
+                "ciclo_real": ciclo_real
+            })
+
+    return plan, retrasados
