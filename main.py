@@ -1,11 +1,19 @@
 # main.py (versión reorganizada)
 
 import json
+import time
 import streamlit as st
 import pandas as pd
 from utils import cargar_cursos, cursos_validos, validar_manual
 from simulador import simular_avance
 from utils import construir_grafo, mostrar_grafo_pyvis, alertas_riesgo, predecir_graduacion
+import datetime
+from csp_solver import (
+    planificar_toda_la_carrera,
+    contador_backtracks,
+    contador_nodos
+)
+
 
 # Configuración de la página
 st.set_page_config(
@@ -103,28 +111,54 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <style>
+        /* Contenedor del multiselect: fondo gris claro y borde para destacarlo */
+        .stMultiSelect > div[data-baseweb="select"] {
+            background-color: #f0f4f8 !important;
+            border: 1px solid #cdd5e0 !important;
+            border-radius: 8px !important;
+            padding: 0.4rem !important;
+        }
+
+        /* Tarjetas de curso: fondo más tenue y texto oscuro */
+        .course-card {
+            background-color: #E8F4F8 !important;
+            color: #1f1f1f !important;
+            border-left: 4px solid var(--secondary) !important;
+        }
+
+        /* Tabla de progreso: celdas con fondo suave */
+        .stDataFrame table, .stDataFrame th, .stDataFrame td {
+            background-color: #fafafa !important;
+            color: #1f1f1f !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # Cargar datos
 @st.cache_data
 def load_data():
     cursos = cargar_cursos()
     nombres_por_codigo = {c["codigo"]: c["nombre"] for c in cursos}
     
-    # Agregar semestre basado en ciclo (1 o 2)
-    for c in cursos:
-        c["semestre"] = [c["ciclo"]]
-    
     return cursos, nombres_por_codigo
 
 cursos, nombres_por_codigo = load_data()
 
-# Agrupar cursos por año y ciclo
+# Agrupar cursos por año y por ciclo UI (entero)
 cursos_por_anio_ciclo = {}
 for c in cursos:
-    anio, ciclo = c["anio"], c["ciclo"]
-    cursos_por_anio_ciclo.setdefault(anio, {}).setdefault(ciclo, []).append(c)
+    anio = c["anio"]
+    # Asegurarnos de que ciclo sea entero: si por error es lista, tomamos el primero
+    ciclo_ui = c["ciclo"][0] if isinstance(c["ciclo"], list) else c["ciclo"]
+    cursos_por_anio_ciclo.setdefault(anio, {}).setdefault(ciclo_ui, []).append(c)
+
+
 
 # Páginas principales
-pagina = st.sidebar.radio("Navegación", ["📋 Mi Progreso y Planificación", "📊 Visualizaciones"])
+pagina = st.sidebar.radio("Navegación", ["📋 Mi Progreso y Planificación"])
 
 if pagina == "📋 Mi Progreso y Planificación":
     # === PÁGINA DE PROGRESO Y PLANIFICACIÓN ===
@@ -247,6 +281,9 @@ if pagina == "📋 Mi Progreso y Planificación":
             df_progreso = df_progreso[df_progreso["Estado"] == "✅ Aprobado"]
         if mostrar_pendientes:
             df_progreso = df_progreso[df_progreso["Estado"] == "⌛ Pendiente"]
+        df_progreso["Ciclo"] = df_progreso["Ciclo"].apply(
+        lambda x: x[0] if isinstance(x, list) else x
+    )
         
         st.dataframe(
             df_progreso.sort_values(by=["Año", "Ciclo", "Nombre"]),
@@ -274,7 +311,10 @@ if pagina == "📋 Mi Progreso y Planificación":
     with col2:
         max_cursos = st.slider(
             "Cursos por ciclo", 
-            1, 6, 3,
+            min_value=1,
+            max_value=8,
+            value=3,
+            step=1,
             help="Número máximo de cursos que planeas llevar por ciclo"
         )
     
@@ -289,7 +329,7 @@ if pagina == "📋 Mi Progreso y Planificación":
     
     modo_recomendacion = st.radio(
         "**Modo de recomendación:**",
-        ["Solo próximo ciclo", "Simular varios ciclos", "Validación manual", "🧠 Recomendación por IA (CSP)"],
+        ["Solo próximo ciclo", "🧠 Recomendación por IA (CSP)"],
         horizontal=True,
         help="Elige cómo deseas que el sistema te ayude a planificar"
     )
@@ -328,15 +368,20 @@ if pagina == "📋 Mi Progreso y Planificación":
                 st.dataframe(df_recomendados, use_container_width=True, hide_index=True)
             else:
                 st.warning("😕 No hay cursos válidos disponibles para el próximo ciclo con los requisitos actuales.")
-        
-        elif modo_recomendacion == "Simular varios ciclos":
-            pass
         elif modo_recomendacion == "🧠 Recomendación por IA (CSP)":
+            from csp_solver import planificar_toda_la_carrera, contador_backtracks, contador_nodos
             from csp_solver import planificar_ciclo_unico, planificar_toda_la_carrera
             st.info("Aplicando recomendación basada en IA (CSP)...")
 
             if st.checkbox("📘 Simular toda la carrera con CSP"):
+                from csp_solver import contador_backtracks, contador_nodos
+                contador_backtracks = 0
+                contador_nodos = 0
+
+                start = time.time()
                 plan = planificar_toda_la_carrera(cursos, aprobados_codigos, ciclo_actual, max_cursos)
+                elapsed = time.time() - start
+
                 if plan:
                     for etapa in plan:
                         with st.expander(f"Ciclo {etapa['ciclo']}", expanded=False):
@@ -348,6 +393,10 @@ if pagina == "📋 Mi Progreso y Planificación":
                                 "Créditos": c.get("creditos", 0)
                             } for c in etapa["cursos"]])
                             st.dataframe(df, use_container_width=True, hide_index=True)
+                    st.subheader("📊 Métricas de CSP")
+                    st.metric("Tiempo de ejecución (s)", f"{elapsed:.3f}")
+                    st.metric("Backtracks", contador_backtracks)
+                    st.metric("Nodos expandidos", contador_nodos)
                 else:
                     st.error("No se pudo encontrar una planificación válida con CSP.")
             else:
@@ -364,15 +413,30 @@ if pagina == "📋 Mi Progreso y Planificación":
                     st.dataframe(df, use_container_width=True, hide_index=True)
                 else:
                     st.warning("No hay cursos válidos según CSP para el próximo ciclo.")
-
+            # 🗓️ Pedir al usuario el año académico de inicio
+            start_year = st.number_input(
+                "🗓️ Año académico de inicio para la simulación",
+                min_value=2000,
+                max_value=2100,
+                value=datetime.datetime.now().year,
+                step=1,
+                help="Indica en qué año comenzará la simulación (p.ej. 2025)"
+            )
             with st.spinner("Simulando plan de estudios..."):
-                plan = simular_avance(cursos, aprobados_nombres, ciclo_actual, max_cursos, n_ciclos=6)
-            
+                plan = simular_avance(
+                    cursos,
+                    aprobados_nombres,
+                    ciclo_actual,
+                    max_cursos,
+                    start_year=start_year
+                )
             if plan:
-                st.success("### 🧭 Plan de avance sugerido (6 ciclos):")
+                st.success("### 🧭 Plan de avance sugerido:")
+                año_termino = plan[-1]["año"]
+                st.metric("🗓️ Año estimado de fin de carrera", año_termino)   
                 
                 for i, etapa in enumerate(plan):
-                    with st.expander(f"📌 Ciclo {etapa['ciclo']} - Año {1 + (etapa['ciclo']-1)//2}", expanded=i<2):
+                    with st.expander(f"📌 Ciclo {etapa['ciclo']} — Año {etapa['año']}", expanded=i<2):
                         if etapa["cursos"]:
                             # Mostrar métricas rápidas
                             cols = st.columns(3)
@@ -395,6 +459,8 @@ if pagina == "📋 Mi Progreso y Planificación":
                                     <small>Año: {curso_info['anio']} | Créditos: {curso_info.get('creditos', 0)}</small>
                                 </div>
                                 """, unsafe_allow_html=True)
+                         
+                                     
                         else:
                             st.info("No hay cursos disponibles para este ciclo según los requisitos.")
                 
@@ -406,125 +472,18 @@ if pagina == "📋 Mi Progreso y Planificación":
                         st.markdown(f"- {aviso}")
             else:
                 st.error("No se pudo generar un plan de avance con los parámetros actuales.")
-# === PÁGINA DE VISUALIZACIONES ===
-    st.markdown('<div class="header"><h1>📊 Visualizaciones del Avance Académico</h1></div>', unsafe_allow_html=True)
-    
-    # Verificar si hay cursos aprobados seleccionados
-    if "seleccion_por_ciclo" not in st.session_state or not any(st.session_state["seleccion_por_ciclo"].values()):
-        st.warning("Por favor selecciona tus cursos aprobados en la página de 'Mi Progreso' primero para habilitar las visualizaciones.")
-        st.stop()
-    
-    # Obtener códigos de cursos aprobados
-    aprobados_codigos = []
-    for key in st.session_state["seleccion_por_ciclo"]:
-        if key.startswith("aprobado_"):
-            anio_ciclo = key.replace("aprobado_", "").split("_")
-            if len(anio_ciclo) == 2:
-                anio = int(anio_ciclo[0])
-                ciclo = int(anio_ciclo[1])
-                for c in cursos_por_anio_ciclo.get(anio, {}).get(ciclo, []):
-                    if c["nombre"] in st.session_state["seleccion_por_ciclo"][key]:
-                        aprobados_codigos.append(c["codigo"])
-    
-    if not aprobados_codigos:
-        st.warning("No hay cursos aprobados seleccionados. Por favor selecciona al menos un curso aprobado.")
-        st.stop()
-    
-    # Gráficos de progreso
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("### 📈 Progreso por año")
-        
-        datos_progreso = []
-        for anio in sorted(cursos_por_anio_ciclo):
-            total_anio = sum(1 for c in cursos if c["anio"] == anio)
-            aprobados_anio = sum(1 for c in cursos if c["anio"] == anio and c["codigo"] in aprobados_codigos)
-            datos_progreso.append({
-                "Año": f"Año {anio}",
-                "Total": total_anio,
-                "Aprobados": aprobados_anio,
-                "Pendientes": total_anio - aprobados_anio
-            })
-        
-        df_progreso = pd.DataFrame(datos_progreso).set_index("Año")
-        st.bar_chart(df_progreso[["Aprobados", "Pendientes"]], color=["#2E86AB", "#F18F01"])
-    
-    with col2:
-        st.markdown("### ⏳ Predicción de graduación")
-        
-        # Obtener configuración
-        ciclo_actual = st.selectbox(
-            "Ciclo académico próximo", 
-            [1, 2], 
-            help="Selecciona el ciclo que vas a cursar",
-            key="pred_ciclo"
+
+    # ——————————————————————————————————————
+# 🔗 Grafo de prerequisitos (en la misma página)
+if st.button("🖇️ Ver grafo de prerequisitos", use_container_width=True):
+    with st.spinner("Generando grafo..."):
+        G = construir_grafo(cursos)
+        html_file = mostrar_grafo_pyvis(G, aprobados=aprobados_codigos)
+        # lo mostramos embebido
+        st.components.v1.html(
+            open(html_file, 'r', encoding='utf-8').read(),
+            height=600,
+            scrolling=True
         )
-        max_cursos = st.slider(
-            "Cursos por ciclo", 
-            1, 6, 3,
-            help="Número máximo de cursos que planeas llevar por ciclo",
-            key="pred_max"
-        )
-        
-        if st.button("Calcular fecha estimada", key="btn_prediccion"):
-            with st.spinner("Calculando..."):
-                aprobados_nombres = [nombres_por_codigo[c] for c in aprobados_codigos if c in nombres_por_codigo]
-                sem = predecir_graduacion(cursos, aprobados_nombres, ciclo_actual, max_cursos)
-                
-                if sem:
-                    año_graduacion = 2023 + (int(sem.split("-")[1]) // 2)
-                    st.success(f"""
-                    <div style="text-align: center; padding: 20px; background-color: #E8F4F8; border-radius: 10px;">
-                        <h3>Semestre esperado de graduación:</h3>
-                        <h1 style="color: var(--primary);">{sem}</h1>
-                        <p>Aproximadamente en {año_graduacion}</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    # Calcular tiempo estimado
-                    ciclos_restantes = int(sem.split("-")[1]) - ciclo_actual
-                    años_restantes = ciclos_restantes // 2
-                    meses_restantes = años_restantes * 6  # 6 meses por ciclo
-                    
-                    st.metric("Tiempo estimado", f"{años_restantes} año(s) y {ciclos_restantes % 2} ciclo(s)")
-                else:
-                    st.error("No se puede completar el plan de estudios con la configuración actual.")
-    
-    # Grafo de prerequisitos
-    st.markdown("---")
-    st.markdown('<div class="subheader"><h3>📚 Grafo de Prerequisitos</h3></div>', unsafe_allow_html=True)
-    
-    if st.button("🖇️ Generar grafo interactivo", use_container_width=True):
-        with st.spinner("Generando visualización..."):
-            G = construir_grafo(cursos)
-            html_file = mostrar_grafo_pyvis(G, aprobados=aprobados_codigos)
-            
-            # Mostrar el grafo en un contenedor más grande
-            st.components.v1.html(open(html_file).read(), height=800, scrolling=True)
-            
-            st.info("""
-            💡 **Leyenda del grafo:**
-            - 🔵 Nodos azules: Cursos aprobados
-            - 🟠 Nodos naranja: Cursos pendientes
-            - ➡️ Flechas: Relaciones de prerequisitos
-            """)
-    
-    # Exportar datos
-    st.markdown("---")
-    st.markdown('<div class="subheader"><h3>📤 Exportar datos</h3></div>', unsafe_allow_html=True)
-    
-    if st.button("💾 Exportar mi progreso a JSON"):
-        progreso = {
-            "aprobados": aprobados_codigos,
-            "configuracion": {
-                "ciclo_actual": ciclo_actual,
-                "max_cursos": max_cursos
-            }
-        }
-        st.download_button(
-            label="Descargar archivo JSON",
-            data=json.dumps(progreso, indent=2),
-            file_name="progreso_academico.json",
-            mime="application/json"
-        )
+        st.markdown("**🔹 Azul = aprobado • 🟠 Naranja = pendiente**")
+# ——————————————————————————————————————

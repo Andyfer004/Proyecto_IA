@@ -7,8 +7,11 @@ def cargar_cursos(path="cursos.json"):
     with open(path, "r") as f:
         cursos = json.load(f)
         for c in cursos:
-            c["semestre"] = [(c["anio"]-1)*2 + c["ciclo"]]
+            # Asegura que el campo 'semestre' exista si no se definió explícitamente
+            if "semestre" not in c:
+                c["semestre"] = [(c["anio"] - 1) * 2 + c["ciclo"]]
         return cursos
+
 
 def cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos, por_aprobar=None):
     nombre_a_codigo = {c["nombre"]: c["codigo"] for c in cursos}
@@ -19,20 +22,21 @@ def cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos, por_apro
         por_aprobar_codes = [nombre_a_codigo[n] for n in por_aprobar if n in nombre_a_codigo]
         aprobados += por_aprobar_codes
 
-    prox_ciclo = 2 if ciclo_actual == 1 else 1
+    semestre_actual = ciclo_actual # o mejor (usar anio actual si lo tienes)
 
     cursos_prox_ciclo = [
         c for c in cursos 
-        if c["ciclo"] == prox_ciclo 
+        if semestre_actual in c["semestre"]
         and c["codigo"] not in aprobados
         and all(pr in aprobados for pr in c["requisitos"])
     ]
+
 
     if len(cursos_prox_ciclo) < max_cursos:
         cursos_alternativos = [
             c for c in cursos
             if c["codigo"] not in aprobados
-            and c["ciclo"] != prox_ciclo
+            and semestre_actual not in c["semestre"]
             and all(pr in aprobados for pr in c["requisitos"])
             and c not in cursos_prox_ciclo
         ]
@@ -122,7 +126,11 @@ def predecir_graduacion(cursos, aprobados_nombres, ciclo_actual, max_cursos):
     ciclos_usados = 0
 
     while restantes and ciclos_usados < 12:
-        posibles = [c for c in restantes if all(pr in [cur["codigo"] for cur in cursos if cur["nombre"] in historial] for pr in c["requisitos"]) and c["ciclo"] == ciclo]
+        posibles = [
+            c for c in restantes
+            if all(pr in [cur["codigo"] for cur in cursos if cur["nombre"] in historial] for pr in c["requisitos"])
+            and ciclo in c["semestre"]
+        ]
         seleccion = ordenar_por_importancia([c["codigo"] for c in posibles], cursos)[:max_cursos]
         if not seleccion:
             ciclo = 2 if ciclo == 1 else 1

@@ -1,53 +1,74 @@
+from collections import defaultdict
 
 def contar_dependencias(curso_codigo, cursos):
     return sum(1 for c in cursos if curso_codigo in c["requisitos"])
 
 def prioridad_compuesta(curso, cursos, historial):
-    min_anio_pendiente = min([c["anio"] for c in cursos if c["codigo"] not in historial], default=curso["anio"])
-    penalizacion = (curso["anio"] - min_anio_pendiente) * 10
-    return (penalizacion, curso["ciclo"], -contar_dependencias(curso["codigo"], cursos))
+    años_pendientes = [c["anio"] for c in cursos if c["codigo"] not in historial]
+    min_anio = min(años_pendientes) if años_pendientes else curso["anio"]
+    penalizacion = (curso["anio"] - min_anio) * 10
+    sem_val = curso["semestre"][0] if isinstance(curso.get("semestre"), list) else curso.get("semestre")
+    return (penalizacion, sem_val, -contar_dependencias(curso["codigo"], cursos))
 
 def ordenar_por_prioridad(candidatos, cursos, historial):
-    return sorted(candidatos, key=lambda x: prioridad_compuesta(x, cursos, historial))
+    # candidatos: lista de objetos curso
+    return sorted(candidatos, key=lambda c: prioridad_compuesta(c, cursos, historial))
 
-def simular_avance(cursos, aprobados_nombres, ciclo_actual, max_cursos, n_ciclos=6, por_aprobar=None):
+def simular_avance(cursos, aprobados_nombres, ciclo_actual, max_cursos, start_year, por_aprobar=None):
+    """
+    Simula avance semestre a semestre hasta agotar todos los cursos.
+    """
     nombre_a_codigo = {c["nombre"]: c["codigo"] for c in cursos}
-    codigo_a_nombre = {c["codigo"]: c["nombre"] for c in cursos}
-
-    historial = set(nombre_a_codigo[n] for n in aprobados_nombres if n in nombre_a_codigo)
+    historial = {nombre_a_codigo[n] for n in aprobados_nombres if n in nombre_a_codigo}
     if por_aprobar:
         historial.update(nombre_a_codigo[n] for n in por_aprobar if n in nombre_a_codigo)
 
     plan = []
-    ciclo = ciclo_actual
+    # Año y ciclo actuales para rastrear cambios de año
+    current_year = start_year
+    current_cycle = ciclo_actual
+    restantes = [c for c in cursos if c["codigo"] not in historial]
 
-    for _ in range(n_ciclos):
+    while restantes:
+        # Filtrar candidatos válidos en este ciclo
         cursos_ciclo = [
             c for c in cursos
-            if c["ciclo"] == ciclo
+            if current_cycle in c["semestre"]
             and c["codigo"] not in historial
             and all(pr in historial for pr in c["requisitos"])
         ]
-
+        if not cursos_ciclo:
+            break
+        # Completar con alternativos si hay cupo
         if len(cursos_ciclo) < max_cursos:
-            cursos_alternativos = [
+            alternativos = [
                 c for c in cursos
-                if c["codigo"] not in historial
+                if current_cycle in c["semestre"]
+                and c["codigo"] not in historial
                 and all(pr in historial for pr in c["requisitos"])
                 and c not in cursos_ciclo
             ]
-            cursos_alternativos = ordenar_por_prioridad(cursos_alternativos, cursos, historial)
-            cursos_ciclo.extend(cursos_alternativos[:max_cursos - len(cursos_ciclo)])
+            alternativos = ordenar_por_prioridad(alternativos, cursos, historial)
+            cursos_ciclo.extend(alternativos[: max_cursos - len(cursos_ciclo)])
 
+        # Seleccionar y anotar año actual
         seleccion = ordenar_por_prioridad(cursos_ciclo, cursos, historial)[:max_cursos]
         plan.append({
-            "ciclo": ciclo,
+            "ciclo": current_cycle,
+            "año": current_year,
             "cursos": [c["nombre"] for c in seleccion],
             "detalles": seleccion,
             "creditos": sum(c.get("creditos", 0) for c in seleccion)
         })
 
+        # Actualizar historial y alternar ciclo
         historial.update(c["codigo"] for c in seleccion)
-        ciclo = 2 if ciclo == 1 else 1
+                # Alternar ciclo
+        current_cycle = 2 if current_cycle == 1 else 1
+        # Incrementar año si cambiamos al otro ciclo (p.ej. ciclo 2→1 o 1→2)
+        if current_cycle != ciclo_actual:
+            current_year += 1
+
+        restantes = [c for c in cursos if c["codigo"] not in historial]
 
     return plan

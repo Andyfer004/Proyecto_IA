@@ -1,6 +1,9 @@
 
 from collections import defaultdict
 
+contador_backtracks = 0
+contador_nodos = 0
+
 def heuristica_completa(codigo, cursos, historial):
     curso = next(c for c in cursos if c["codigo"] == codigo)
     dependencias = sum(1 for c in cursos if codigo in c["requisitos"])
@@ -8,7 +11,8 @@ def heuristica_completa(codigo, cursos, historial):
     años_pendientes = [c["anio"] for c in cursos if c["codigo"] not in historial]
     min_anio_pendiente = min(años_pendientes) if años_pendientes else curso["anio"]
     penalizacion = (curso["anio"] - min_anio_pendiente) * 10
-    return (penalizacion, curso["ciclo"], -dependencias)
+    sem_val = curso["semestre"][0] if isinstance(curso.get("semestre"), list) else curso.get("semestre")
+    return (penalizacion, sem_val, -dependencias)
 
 def ordenar_por_prioridad(codigos, cursos, historial):
     return sorted(codigos, key=lambda x: heuristica_completa(x, cursos, historial))
@@ -24,6 +28,8 @@ def forward_checking(curso_codigo, cursos, asignaciones, ciclo_actual, max_curso
     return True
 
 def backtracking(asignaciones, cursos, pendientes, dominio, ciclo_actual, max_cursos, total_ciclos):
+    global contador_backtracks, contador_nodos
+    contador_nodos += 1   
     if len(asignaciones) == len(pendientes):
         return asignaciones
 
@@ -36,7 +42,8 @@ def backtracking(asignaciones, cursos, pendientes, dominio, ciclo_actual, max_cu
 
         curso = next(c for c in cursos if c["codigo"] == variable)
         if requisitos_cumplidos(curso, asignaciones, ciclo):
-            asignaciones[variable] = ciclo
+            contador_backtracks += 1
+            asignaciones[variable] = ciclo            
             if forward_checking(variable, cursos, asignaciones, ciclo, max_cursos, total_ciclos):
                 resultado = backtracking(asignaciones, cursos, pendientes, dominio, ciclo_actual, max_cursos, total_ciclos)
                 if resultado:
@@ -45,14 +52,30 @@ def backtracking(asignaciones, cursos, pendientes, dominio, ciclo_actual, max_cu
     return None
 
 def planificar_ciclo_unico(cursos, aprobados_codigos, ciclo_actual, max_cursos):
+    """
+    Planifica el próximo ciclo usando heurística de dependencias y semestres.
+    """
     historial = set(aprobados_codigos)
-    pendientes = [c for c in cursos if c["codigo"] not in historial]
+    # Filtrar candidatos válidos para el semestre actual
     candidatos = [
-        c for c in pendientes
-        if c["ciclo"] == ciclo_actual and all(pr in historial for pr in c["requisitos"])
+        c for c in cursos
+        if c["codigo"] not in historial
+        and ciclo_actual in c["semestre"]
+        and all(pr in historial for pr in c["requisitos"])
     ]
-    candidatos = ordenar_por_prioridad([c["codigo"] for c in candidatos], cursos, historial)
-    return [c for c in cursos if c["codigo"] in candidatos[:max_cursos]]
+
+    # Ordenar por relevancia usando heuristica_completa a través de ordenar_por_prioridad
+    codes_sorted = ordenar_por_prioridad(
+        [c["codigo"] for c in candidatos], cursos, historial
+    )
+
+    # Mapear códigos ordenados a objetos y devolver los primeros max_cursos
+    seleccion = [
+        next(course for course in cursos if course["codigo"] == code)
+        for code in codes_sorted[:max_cursos]
+    ]
+
+    return seleccion
 
 def planificar_toda_la_carrera(cursos, aprobados_codigos, ciclo_actual, max_cursos, total_ciclos=12):
     pendientes = [c for c in cursos if c["codigo"] not in aprobados_codigos]
@@ -60,7 +83,7 @@ def planificar_toda_la_carrera(cursos, aprobados_codigos, ciclo_actual, max_curs
     historial = set(aprobados_codigos)
 
     dominio = {
-        c["codigo"]: list(range(ciclo_actual, ciclo_actual + total_ciclos))
+        c["codigo"]: c["semestre"]
         for c in pendientes
     }
 

@@ -4,49 +4,56 @@
     "nombre": "Ciencias de la Vida",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1]
   },
   {
     "codigo": "CC2005",
     "nombre": "Algoritmos y Programación Básica",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU169",
     "nombre": "Pensamiento Cuantitativo",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU176",
     "nombre": "Comunicación efectiva",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1]
   },
   {
     "codigo": "QQ2018",
     "nombre": "Química General",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1]
   },
   {
     "codigo": "CC2007",
     "nombre": "Introducción a la Ingeniería",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1]
   },
   {
     "codigo": "CU178",
     "nombre": "Coaching para la excelencia",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1]
   },
   {
     "codigo": "CC2008",
@@ -55,7 +62,8 @@
     "requisitos": [
       "CC2005"
     ],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU170",
@@ -64,14 +72,16 @@
     "requisitos": [
       "CU169"
     ],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU171",
     "nombre": "Ciudadanía global e intercultural",
     "ciclo": 2,
     "requisitos": [],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "FF2016",
@@ -80,25 +90,28 @@
     "requisitos": [
       "CU169"
     ],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "MM2028",
     "nombre": "Cálculo 1",
     "ciclo": 2,
     "requisitos": [
-      "(CU169) Pensamiento cuantitativo"
+      "CU169"
     ],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
-    "codigo": "MM2002 ",
+    "codigo": "MM2002",
     "nombre": "Algebra Lineal 1",
     "ciclo": 2,
     "requisitos": [
       "CU169"
     ],
-    "anio": 1
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CC3054",
@@ -107,7 +120,8 @@
     "requisitos": [
       "CC2005"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1]
   },
   {
     "codigo": "FF2017",
@@ -117,7 +131,8 @@
       "MM2028",
       "FF2016"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "MM2001",
@@ -126,7 +141,8 @@
     "requisitos": [
       "MM2028"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU173",
@@ -135,7 +151,8 @@
     "requisitos": [
       "CU174"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CC2016",
@@ -144,14 +161,16 @@
     "requisitos": [
       "CC2008"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1]
   },
   {
     "codigo": "CU172",
     "nombre": "Guatemala en el contexto mundial",
     "ciclo": 1,
     "requisitos": [],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "FF2018",
@@ -160,7 +179,8 @@
     "requisitos": [
       "FF2017"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [2]
   },
   {
     "codigo": "MM2015",
@@ -169,7 +189,8 @@
     "requisitos": [
       "CU169"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [2]
   },
   {
     "codigo": "CC3087",
@@ -178,7 +199,8 @@
     "requisitos": [
       "CC2008"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [2]
   },
   {
     "codigo": "MM2029",
@@ -188,14 +210,16 @@
       "MM2001",
       "MM2002"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU175",
     "nombre": "Investigación y Pensamiento Científico",
     "ciclo": 2,
     "requisitos": [],
-    "anio": 2
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CC3086",
@@ -204,7 +228,8 @@
     "requisitos": [
       "CC3054"
     ],
-    "anio": 2
+    "anio": 2,
+    "semestre": [2]
   },
   {
     "codigo": "CC3088",
@@ -213,7 +238,8 @@
     "requisitos": [
       "CC2016"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1]
   },
   {
     "codigo": "CC3090",
@@ -222,7 +248,8 @@
     "requisitos": [
       "CC2016"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1]
   },
   {
     "codigo": "CC3062",
@@ -231,7 +258,8 @@
     "requisitos": [
       "CC3087"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1]
   },
   {
     "codigo": "CC3059",
@@ -240,7 +268,8 @@
     "requisitos": [
       "CC2016"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1]
   },
   {
     "codigo": "MM3014",
@@ -251,31 +280,35 @@
       "CU170",
       "MM2015"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1]
   },
   {
-    "codigo": "",
+    "codigo": "CC5000",
     "nombre": "Selectivo de desarrollo social,emocional o laboral",
     "ciclo": 1,
     "requisitos": [
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU177",
     "nombre": "Emprendimiento e Innovación",
     "ciclo": 2,
     "requisitos": [],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CC3091",
     "nombre": "Ingeniería de Software 2",
     "ciclo": 2,
     "requisitos": [
-      "CC3058"
+      "CC3090"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [2]
   },
   {
     "codigo": "CC2018",
@@ -286,15 +319,17 @@
       "CC2016",
       "CC3054"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [2]
   },
   {
-    "codigo": "",
+    "codigo": "CC5001",
     "nombre": "Selectivo de Diseño y Creatividad",
     "ciclo": 2,
     "requisitos": [
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [1, 2]
   },
   {
     "codigo": "MM2012",
@@ -304,7 +339,8 @@
       "CU169",
       "MM2015"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [2]
   },
   {
     "codigo": "CC2019",
@@ -313,7 +349,8 @@
     "requisitos": [
       "MM2015"
     ],
-    "anio": 3
+    "anio": 3,
+    "semestre": [2]
   },
   {
     "codigo": "CC3085",
@@ -323,7 +360,8 @@
       "CC2016",
       "MM2012"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3074",
@@ -333,7 +371,8 @@
       "CU170",
       "CC2016"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3089",
@@ -342,7 +381,8 @@
     "requisitos": [
       "CC3088"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3071",
@@ -351,7 +391,8 @@
     "requisitos": [
       "CC2019"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3064",
@@ -361,7 +402,8 @@
       "CC2016",
       "CC3054"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3041",
@@ -370,7 +412,8 @@
     "requisitos": [
       "CC2019"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3069",
@@ -379,7 +422,8 @@
     "requisitos": [
       "CC3064"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3084",
@@ -389,7 +433,8 @@
       "CC2016",
       "CC3074"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3092",
@@ -398,7 +443,8 @@
     "requisitos": [
       "CC3085"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3067",
@@ -407,16 +453,18 @@
     "requisitos": [
       "CC3064"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3032",
     "nombre": "Construcción de Compiladores",
     "ciclo": 2,
     "requisitos": [
-      "CC3030"
+      "CC3071"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC2017",
@@ -426,7 +474,8 @@
       "MM3014",
       "MM2029"
     ],
-    "anio": 4
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3076",
@@ -447,7 +496,8 @@
       "CC2017"
 
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3043",
@@ -456,7 +506,8 @@
     "requisitos": [
       "CC3091"
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3093",
@@ -477,7 +528,8 @@
       "CC2017"
 
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3037",
@@ -486,12 +538,13 @@
     "requisitos": [
       "CC3067"
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "IA3033",
     "nombre": "Microeconomía - Selectivo de especialidad",
-    "ciclo": 2,
+    "ciclo": 1,
     "requisitos": [
       "CC3085",
       "CC3074",
@@ -507,7 +560,8 @@
       "CC2017"
 
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3080",
@@ -516,7 +570,8 @@
     "requisitos": [
       "CC3089"
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3047",
@@ -525,7 +580,8 @@
     "requisitos": [
       "CC3067"
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [2]
   },
   {
     "codigo": "CC3042",
@@ -534,7 +590,17 @@
     "requisitos": [
       "CC3089"
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [2]
+  },
+  {
+    "codigo": "CC5002",
+    "nombre": "Selectivo de computación - Selectivo de especialidad",
+    "ciclo": 2,
+    "requisitos": [
+    ],
+    "anio": 5,
+    "semestre": [2]
   },
   {
     "codigo": "PP3047",
@@ -555,7 +621,8 @@
       "CC2017"
 
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [2]
   },
   {
     "codigo": "IA3025",
@@ -576,15 +643,17 @@
       "CC2017"
 
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [2]
   },
   {
     "codigo": "CC4012",
     "nombre": "Trabajo de Graduación",
     "ciclo": 2,
     "requisitos": [
-      "CC3068"
+      "CC3076"
     ],
-    "anio": 5
+    "anio": 5,
+    "semestre": [2]
   }
 ]
