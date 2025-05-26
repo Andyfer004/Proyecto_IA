@@ -6,5 +6,5 @@ Este sistema recomienda al estudiante universitario qué cursos debe tomar en el
 - Cursos ya aprobados
 - Carga máxima permitida
 
-✅ Hecho con Python + Streamlit  
+✅ Hecho con Python  Streamlit  
 📘 Basado en técnicas de CSP, heurísticas y búsqueda (visto en clase de IA).
