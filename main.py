@@ -330,7 +330,7 @@ if pagina == "📋 Mi Progreso y Planificación":
     
     modo_recomendacion = st.radio(
     "Modo de recomendación:",
-    ["Solo próximo ciclo", "🧠 Greedy completo", "🔄 CSP completo"],
+    ["Solo próximo ciclo", "🧠 Greedy completo"],
     horizontal=True
 )
 
@@ -354,37 +354,25 @@ if pagina == "📋 Mi Progreso y Planificación":
 
             # 2) Greedy completo
             elif modo_recomendacion == "🧠 Greedy completo":
-                plan_sim = simular_avance(
+                t0 = time.time()
+                plan_sim, iter_greedy, nodos_greedy = simular_avance(
                     cursos, aprobados_nombres, ciclo_actual, max_cursos, start_year
                 )
-                back_sim, nodes_sim = 0, 0
+                elapsed_greedy = time.time() - t0
 
-            # 3) CSP completo
-            else:  # "🔄 CSP completo"
-                plan_sim, back_sim, nodes_sim = simular_avance_csp(
-                    cursos, aprobados_nombres, ciclo_actual, max_cursos, start_year
-                )
+                st.subheader("📊 Métricas Greedy")
+                st.metric("⏱️ Tiempo (s)",      f"{elapsed_greedy:.3f}")
+                st.metric("🔄 Iteraciones",      iter_greedy)
+                st.metric("🔎 Nodos explorados", nodos_greedy)
 
-            # Mostrar métricas para los modos completos
-            if modo_recomendacion in ("🧠 Greedy completo", "🔄 CSP completo"):
-                st.subheader("📊 Métricas de simulación")
-                st.metric("🔄 Backtracks", back_sim)
-                st.metric("🔎 Nodos explorados", nodes_sim)
+                # — Mostrar plan SEMESTRE A SEMESTRE — 
+            if modo_recomendacion == "🧠 Greedy completo" and plan_sim:
+                st.subheader("🗓️ Plan semestre a semestre")
+                for etapa in plan_sim:
+                    with st.expander(f"Ciclo {etapa['ciclo']} — Año {etapa['año']}", expanded=False):
+                        df = pd.DataFrame([{"Curso": n} for n in etapa["cursos"]])
+                        st.dataframe(df, hide_index=True, use_container_width=True)
 
-                # Mostrar plan
-                if plan_sim is None:
-                    st.error("❌ No se pudo generar un plan.")
-                elif not plan_sim:
-                    st.info("✅ ¡No quedan cursos pendientes!")
-                else:
-                    for etapa in plan_sim:
-                        with st.expander(f"Ciclo {etapa['ciclo']} — Año {etapa['año']}"):
-                            df = pd.DataFrame([{"Curso": n} for n in etapa["cursos"]])
-                            st.dataframe(
-                                df,
-                                hide_index=True,
-                                use_container_width=True
-                            )
 
 
     # ——————————————————————————————————————
