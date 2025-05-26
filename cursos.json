@@ -1,610 +1,659 @@
 [
   {
-    "codigo": "CC2005",
-    "nombre": "Algoritmos y Programaci\u00f3n B\u00e1sica",
-    "semestre": [
-      1,
-      2
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
-  },
-  {
     "codigo": "CU174",
     "nombre": "Ciencias de la Vida",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1]
   },
   {
-    "codigo": "CU176",
-    "nombre": "Comunicaci\u00f3n Efectiva",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CU178",
-    "nombre": "Coaching para la Excelencia",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
-  },
-  {
-    "codigo": "QQ2018",
-    "nombre": "Qu\u00edmica General",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC2007",
-    "nombre": "Intro a Ingenier\u00eda en Computaci\u00f3n",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
+    "codigo": "CC2005",
+    "nombre": "Algoritmos y Programación Básica",
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU169",
     "nombre": "Pensamiento Cuantitativo",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [],
-    "correquisitos": []
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
-    "codigo": "MM2028",
-    "nombre": "C\u00e1lculo 1",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CU169"
-    ],
-    "correquisitos": []
+    "codigo": "CU176",
+    "nombre": "Comunicación efectiva",
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1]
   },
   {
-    "codigo": "FF2016",
-    "nombre": "F\u00edsica 1",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CU174"
-    ],
-    "correquisitos": []
+    "codigo": "QQ2018",
+    "nombre": "Química General",
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC2007",
+    "nombre": "Introducción a la Ingeniería",
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CU178",
+    "nombre": "Coaching para la excelencia",
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1]
   },
   {
     "codigo": "CC2008",
-    "nombre": "Programaci\u00f3n Orientada a Objetos",
-    "semestre": [
-      2
+    "nombre": "Programación Orientada a Objetos",
+    "ciclo": 2,
+    "requisitos": [
+      "CC2005"
     ],
-    "prerequisitos": [
-      "CU176"
-    ],
-    "correquisitos": []
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU170",
-    "nombre": "Estad\u00edstica 1",
-    "semestre": [
-      1,
-      2
+    "nombre": "Estadística 1",
+    "ciclo": 2,
+    "requisitos": [
+      "CU169"
     ],
-    "prerequisitos": [
-      "CU178"
-    ],
-    "correquisitos": []
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU171",
-    "nombre": "Ciudadan\u00eda Global",
-    "semestre": [
-      2
+    "nombre": "Ciudadanía global e intercultural",
+    "ciclo": 2,
+    "requisitos": [],
+    "anio": 1,
+    "semestre": [1, 2]
+  },
+  {
+    "codigo": "FF2016",
+    "nombre": "Física 1",
+    "ciclo": 2,
+    "requisitos": [
+      "CU169"
     ],
-    "prerequisitos": [
-      "QQ2018"
+    "anio": 1,
+    "semestre": [1, 2]
+  },
+  {
+    "codigo": "MM2028",
+    "nombre": "Cálculo 1",
+    "ciclo": 2,
+    "requisitos": [
+      "CU169"
     ],
-    "correquisitos": []
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "MM2002",
-    "nombre": "\u00c1lgebra Lineal 1",
-    "semestre": [
-      2
+    "nombre": "Algebra Lineal 1",
+    "ciclo": 2,
+    "requisitos": [
+      "CU169"
     ],
-    "prerequisitos": [
-      "CC2007"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "MM2001",
-    "nombre": "C\u00e1lculo 2",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [
-      "MM2028"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CU172",
-    "nombre": "Guatemala en el Contexto Mundial",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [
-      "FF2016"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CU173",
-    "nombre": "Retos Ambientales",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [
-      "CC2008"
-    ],
-    "correquisitos": []
+    "anio": 1,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CC3054",
-    "nombre": "Arquitectura y Ensamblador",
-    "semestre": [
-      1
+    "nombre": "Org. De Computadoras y Assembler ",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2005"
     ],
-    "prerequisitos": [
-      "CU170"
-    ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [1]
   },
   {
     "codigo": "FF2017",
-    "nombre": "F\u00edsica 2",
-    "semestre": [
-      1
+    "nombre": "Física 2",
+    "ciclo": 1,
+    "requisitos": [
+      "MM2028",
+      "FF2016"
     ],
-    "prerequisitos": [
-      "CU171"
+    "anio": 2,
+    "semestre": [1, 2]
+  },
+  {
+    "codigo": "MM2001",
+    "nombre": "Cálculo 2",
+    "ciclo": 1,
+    "requisitos": [
+      "MM2028"
     ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [1, 2]
+  },
+  {
+    "codigo": "CU173",
+    "nombre": "Retos Ambientales y sostenibilidad",
+    "ciclo": 1,
+    "requisitos": [
+      "CU174"
+    ],
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CC2016",
-    "nombre": "Estructuras de Datos",
-    "semestre": [
-      1
+    "nombre": "Algoritmos y Estructuras de Datos",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2008"
     ],
-    "prerequisitos": [
-      "MM2002"
-    ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CU172",
+    "nombre": "Guatemala en el contexto mundial",
+    "ciclo": 1,
+    "requisitos": [],
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
     "codigo": "FF2018",
-    "nombre": "F\u00edsica 3",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "MM2001"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC3086",
-    "nombre": "Microprocesadores",
-    "semestre": [
-      1,
-      2
-    ],
-    "prerequisitos": [
-      "CU172"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC3087",
-    "nombre": "Plataformas M\u00f3viles",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CU173"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "MM2029",
-    "nombre": "Ecuaciones Diferenciales",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CC3054"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CU175",
-    "nombre": "Investigaci\u00f3n Cient\u00edfica",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
+    "nombre": "Física 3",
+    "ciclo": 2,
+    "requisitos": [
       "FF2017"
     ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [2]
   },
   {
     "codigo": "MM2015",
-    "nombre": "Matem\u00e1tica Discreta",
-    "semestre": [
-      2
+    "nombre": "Matemática Discreta 1",
+    "ciclo": 2,
+    "requisitos": [
+      "CU169"
     ],
-    "prerequisitos": [
-      "CC2016"
-    ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [2]
   },
   {
-    "codigo": "TD2020",
-    "nombre": "Science of Happiness",
-    "semestre": [
-      1
+    "codigo": "CC3087",
+    "nombre": "Programación Plataformas Móviles",
+    "ciclo": 2,
+    "requisitos": [
+      "CC2008"
     ],
-    "prerequisitos": [
-      "FF2018"
-    ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [2]
   },
   {
-    "codigo": "MM3014",
-    "nombre": "Teor\u00eda de Probabilidades",
-    "semestre": [
-      1
+    "codigo": "MM2029",
+    "nombre": "Ecuaciones Diferenciales 1",
+    "ciclo": 2,
+    "requisitos": [
+      "MM2001",
+      "MM2002"
     ],
-    "prerequisitos": [
-      "CC3086"
-    ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
-    "codigo": "CC3059",
-    "nombre": "Interacci\u00f3n Humano Computador",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [
-      "CC3087"
-    ],
-    "correquisitos": []
+    "codigo": "CU175",
+    "nombre": "Investigación y Pensamiento Científico",
+    "ciclo": 2,
+    "requisitos": [],
+    "anio": 2,
+    "semestre": [1, 2]
   },
   {
-    "codigo": "CC3062",
-    "nombre": "Tecnolog\u00edas Web",
-    "semestre": [
-      1
+    "codigo": "CC3086",
+    "nombre": "Programación de Microprocesadores",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3054"
     ],
-    "prerequisitos": [
-      "MM2029"
-    ],
-    "correquisitos": []
+    "anio": 2,
+    "semestre": [2]
   },
   {
     "codigo": "CC3088",
-    "nombre": "Base de Datos 1",
-    "semestre": [
-      1
+    "nombre": "Bases de Datos 1",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2016"
     ],
-    "prerequisitos": [
-      "CU175"
-    ],
-    "correquisitos": []
+    "anio": 3,
+    "semestre": [1]
   },
   {
     "codigo": "CC3090",
-    "nombre": "Ingenier\u00eda de Software 1",
-    "semestre": [
-      1,
-      2
+    "nombre": "Ingeniería de Software 1",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2016"
     ],
-    "prerequisitos": [
+    "anio": 3,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3062",
+    "nombre": "Sistemas y Tecnologías Web",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3087"
+    ],
+    "anio": 3,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3059",
+    "nombre": "Interacción Humano Computador",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2016"
+    ],
+    "anio": 3,
+    "semestre": [1]
+  },
+  {
+    "codigo": "MM3014",
+    "nombre": "Teoría de Probabilidades",
+    "ciclo": 1,
+    "requisitos": [
+      "MM2001",
+      "CU170",
       "MM2015"
     ],
-    "correquisitos": []
+    "anio": 3,
+    "semestre": [1]
   },
   {
-    "codigo": "CC3091",
-    "nombre": "Ingenier\u00eda de Software 2",
-    "semestre": [
-      2
+    "codigo": "CC5000",
+    "nombre": "Selectivo de desarrollo social,emocional o laboral",
+    "ciclo": 1,
+    "requisitos": [
     ],
-    "prerequisitos": [
-      "TD2020"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC2018",
-    "nombre": "Gr\u00e1ficas por Computadora",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "MM3014"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC2019",
-    "nombre": "Teor\u00eda de la Computaci\u00f3n",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CC3059"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "MM3032",
-    "nombre": "L\u00f3gica Matem\u00e1tica",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CC3062"
-    ],
-    "correquisitos": []
+    "anio": 3,
+    "semestre": [1, 2]
   },
   {
     "codigo": "CU177",
-    "nombre": "Emprendimiento",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CC3088"
-    ],
-    "correquisitos": []
+    "nombre": "Emprendimiento e Innovación",
+    "ciclo": 2,
+    "requisitos": [],
+    "anio": 3,
+    "semestre": [1, 2]
   },
   {
-    "codigo": "CU193",
-    "nombre": "Confianza Creativa",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
+    "codigo": "CC3091",
+    "nombre": "Ingeniería de Software 2",
+    "ciclo": 2,
+    "requisitos": [
       "CC3090"
     ],
-    "correquisitos": []
+    "anio": 3,
+    "semestre": [2]
   },
   {
-    "codigo": "CC3041",
-    "nombre": "An\u00e1lisis y Dise\u00f1o de Algoritmos",
-    "semestre": [
-      1
+    "codigo": "CC2018",
+    "nombre": "Gráficas por computadora",
+    "ciclo": 2,
+    "requisitos": [
+      "MM2002",
+      "CC2016",
+      "CC3054"
     ],
-    "prerequisitos": [
-      "CC3091"
-    ],
-    "correquisitos": []
+    "anio": 3,
+    "semestre": [2]
   },
   {
-    "codigo": "CC3064",
-    "nombre": "Sistemas Operativos",
-    "semestre": [
-      1
+    "codigo": "CC5001",
+    "nombre": "Selectivo de Diseño y Creatividad",
+    "ciclo": 2,
+    "requisitos": [
     ],
-    "prerequisitos": [
-      "CC2018"
+    "anio": 3,
+    "semestre": [1, 2]
+  },
+  {
+    "codigo": "MM2012",
+    "nombre": "Lógica Matemática",
+    "ciclo": 2,
+    "requisitos": [
+      "CU169",
+      "MM2015"
     ],
-    "correquisitos": []
+    "anio": 3,
+    "semestre": [2]
+  },
+  {
+    "codigo": "CC2019",
+    "nombre": "Teoría de la Computación",
+    "ciclo": 2,
+    "requisitos": [
+      "MM2015"
+    ],
+    "anio": 3,
+    "semestre": [2]
   },
   {
     "codigo": "CC3085",
     "nombre": "Inteligencia Artificial",
-    "semestre": [
-      1
+    "ciclo": 1,
+    "requisitos": [
+      "CC2016",
+      "MM2012"
     ],
-    "prerequisitos": [
-      "CC2019"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC3089",
-    "nombre": "Base de Datos 2",
-    "semestre": [
-      1,
-      2
-    ],
-    "prerequisitos": [
-      "MM3032"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC3071",
-    "nombre": "Dise\u00f1o de Lenguajes",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [
-      "CU177"
-    ],
-    "correquisitos": []
+    "anio": 4,
+    "semestre": [1]
   },
   {
     "codigo": "CC3074",
-    "nombre": "Miner\u00eda de Datos",
-    "semestre": [
-      1
+    "nombre": "Mineria de Datos",
+    "ciclo": 1,
+    "requisitos": [
+      "CU170",
+      "CC2016"
     ],
-    "prerequisitos": [
-      "CU193"
+    "anio": 4,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3089",
+    "nombre": "Bases de Datos 2",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3088"
     ],
-    "correquisitos": []
+    "anio": 4,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3071",
+    "nombre": "Diseño de Lenguajes de Programación",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2019"
+    ],
+    "anio": 4,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3064",
+    "nombre": "Sistemas Operativos",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2016",
+      "CC3054"
+    ],
+    "anio": 4,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3041",
+    "nombre": "Análisis y Diseño de Algoritmos",
+    "ciclo": 1,
+    "requisitos": [
+      "CC2019"
+    ],
+    "anio": 4,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3069",
+    "nombre": "Computación Paralela y Distribuida",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3064"
+    ],
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3084",
     "nombre": "Data Science",
-    "semestre": [
-      2
+    "ciclo": 2,
+    "requisitos": [
+      "CC2016",
+      "CC3074"
     ],
-    "prerequisitos": [
-      "CC3041"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC2017",
-    "nombre": "Modelaci\u00f3n y Simulaci\u00f3n",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CC3064"
-    ],
-    "correquisitos": []
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3092",
-    "nombre": "Deep Learning",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
+    "nombre": "Deep Learning y Sistemas Inteligentes",
+    "ciclo": 2,
+    "requisitos": [
       "CC3085"
     ],
-    "correquisitos": []
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3067",
     "nombre": "Redes",
-    "semestre": [
-      2
+    "ciclo": 2,
+    "requisitos": [
+      "CC3064"
     ],
-    "prerequisitos": [
-      "CC3089"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "CC3069",
-    "nombre": "Computaci\u00f3n Paralela",
-    "semestre": [
-      2
-    ],
-    "prerequisitos": [
-      "CC3071"
-    ],
-    "correquisitos": []
+    "anio": 4,
+    "semestre": [2]
   },
   {
     "codigo": "CC3032",
-    "nombre": "Compiladores",
-    "semestre": [
-      2
+    "nombre": "Construcción de Compiladores",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3071"
     ],
-    "prerequisitos": [
-      "CC3074"
-    ],
-    "correquisitos": []
+    "anio": 4,
+    "semestre": [2]
   },
   {
-    "codigo": "CC3037",
-    "nombre": "Seguridad de Sistemas",
-    "semestre": [
-      1
+    "codigo": "CC2017",
+    "nombre": "Modelación y Simulación",
+    "ciclo": 2,
+    "requisitos": [
+      "MM3014",
+      "MM2029"
     ],
-    "prerequisitos": [
-      "CC3084"
+    "anio": 4,
+    "semestre": [2]
+  },
+  {
+    "codigo": "CC3076",
+    "nombre": "Diseño e Innovación en Ingeniería 1",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3085",
+      "CC3074",
+      "CC3089",
+      "CC3071",
+      "CC3064",
+      "CC3041",
+      "CC3069",
+      "CC3084",
+      "CC3092",
+      "CC3067",
+      "CC3032",
+      "CC2017"
+
     ],
-    "correquisitos": []
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3043",
-    "nombre": "Gesti\u00f3n de Proyectos TI",
-    "semestre": [
-      1,
-      2
+    "nombre": "Administración de Proyectos de TI",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3091"
     ],
-    "prerequisitos": [
-      "CC2017"
-    ],
-    "correquisitos": []
-  },
-  {
-    "codigo": "TD2020",
-    "nombre": "Science of Happiness",
-    "semestre": [
-      1
-    ],
-    "prerequisitos": [
-      "CC3092"
-    ],
-    "correquisitos": []
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3093",
-    "nombre": "Pr\u00e1ctica Profesional",
-    "semestre": [
-      1
+    "nombre": "Práctica Profesional",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3085",
+      "CC3074",
+      "CC3089",
+      "CC3071",
+      "CC3064",
+      "CC3041",
+      "CC3069",
+      "CC3084",
+      "CC3092",
+      "CC3067",
+      "CC3032",
+      "CC2017"
+
     ],
-    "prerequisitos": [
+    "anio": 5,
+    "semestre": [1]
+  },
+  {
+    "codigo": "CC3037",
+    "nombre": "Seguridad en Sistemas de Computación",
+    "ciclo": 1,
+    "requisitos": [
       "CC3067"
     ],
-    "correquisitos": []
+    "anio": 5,
+    "semestre": [1]
   },
   {
-    "codigo": "CC3100",
-    "nombre": "Dise\u00f1o e Innovaci\u00f3n",
-    "semestre": [
-      1
+    "codigo": "IA3033",
+    "nombre": "Microeconomía - Selectivo de especialidad",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3085",
+      "CC3074",
+      "CC3089",
+      "CC3071",
+      "CC3064",
+      "CC3041",
+      "CC3069",
+      "CC3084",
+      "CC3092",
+      "CC3067",
+      "CC3032",
+      "CC2017"
+
     ],
-    "prerequisitos": [
-      "CC3069"
-    ],
-    "correquisitos": []
+    "anio": 5,
+    "semestre": [1]
   },
   {
-    "codigo": "CC4012",
-    "nombre": "Trabajo de Graduaci\u00f3n",
-    "semestre": [
-      2
+    "codigo": "CC3080",
+    "nombre": "Big Data - Selectivo de especialidad",
+    "ciclo": 1,
+    "requisitos": [
+      "CC3089"
     ],
-    "prerequisitos": [
-      "CC3037"
-    ],
-    "correquisitos": []
+    "anio": 5,
+    "semestre": [1]
   },
   {
     "codigo": "CC3047",
-    "nombre": "Administraci\u00f3n de Sistemas",
-    "semestre": [
-      2
+    "nombre": "Administración y Mantenimiento Sistemas",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3067"
     ],
-    "prerequisitos": [
-      "CC3043"
+    "anio": 5,
+    "semestre": [2]
+  },
+  {
+    "codigo": "CC3042",
+    "nombre": "Arquitectura Empresarial - Selectivo de especialidad",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3089"
     ],
-    "correquisitos": []
+    "anio": 5,
+    "semestre": [2]
+  },
+  {
+    "codigo": "CC5002",
+    "nombre": "Selectivo de computación - Selectivo de especialidad",
+    "ciclo": 2,
+    "requisitos": [
+    ],
+    "anio": 5,
+    "semestre": [2]
+  },
+  {
+    "codigo": "PP3047",
+    "nombre": "Gestion y administración de talento - Selectivo de especialidad",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3085",
+      "CC3074",
+      "CC3089",
+      "CC3071",
+      "CC3064",
+      "CC3041",
+      "CC3069",
+      "CC3084",
+      "CC3092",
+      "CC3067",
+      "CC3032",
+      "CC2017"
+
+    ],
+    "anio": 5,
+    "semestre": [2]
+  },
+  {
+    "codigo": "IA3025",
+    "nombre": "Planeación Estratégica y Operacional - Selectivo de especialidad",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3085",
+      "CC3074",
+      "CC3089",
+      "CC3071",
+      "CC3064",
+      "CC3041",
+      "CC3069",
+      "CC3084",
+      "CC3092",
+      "CC3067",
+      "CC3032",
+      "CC2017"
+
+    ],
+    "anio": 5,
+    "semestre": [2]
+  },
+  {
+    "codigo": "CC4012",
+    "nombre": "Trabajo de Graduación",
+    "ciclo": 2,
+    "requisitos": [
+      "CC3076"
+    ],
+    "anio": 5,
+    "semestre": [2]
   }
 ]
