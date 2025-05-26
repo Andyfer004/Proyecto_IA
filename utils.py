@@ -1,121 +1,146 @@
-# utils.py
 
-def contar_dependencias(curso_nombre, cursos):
-    count = 0
-    for curso in cursos:
-        if curso_nombre in curso["prerequisitos"]:
-            count += 1
-    return count
-
-def ordenar_por_importancia(candidatos, cursos):
-    importancia = {c: contar_dependencias(c, cursos) for c in candidatos}
-    return sorted(candidatos, key=lambda x: importancia[x], reverse=True)
-
-def filtrar_por_semestre(cursos, semestre):
-    return [c for c in cursos if semestre in c["semestre"]]
-
-def filtrar_aprobados(cursos, aprobados):
-    return [c for c in cursos if c["nombre"] not in aprobados]
-
-
-# ——— Nuevas funcionalidades ———
-
+import json
 import networkx as nx
 from pyvis.network import Network
 
+def cargar_cursos(path="cursos.json"):
+    with open(path, "r") as f:
+        cursos = json.load(f)
+        for c in cursos:
+            # Asegura que el campo 'semestre' exista si no se definió explícitamente
+            if "semestre" not in c:
+                c["semestre"] = [(c["anio"] - 1) * 2 + c["ciclo"]]
+        return cursos
+
+
+def cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos, por_aprobar=None):
+    nombre_a_codigo = {c["nombre"]: c["codigo"] for c in cursos}
+    codigo_a_nombre = {c["codigo"]: c["nombre"] for c in cursos}
+
+    aprobados = [nombre_a_codigo[n] for n in aprobados_nombres if n in nombre_a_codigo]
+    if por_aprobar:
+        por_aprobar_codes = [nombre_a_codigo[n] for n in por_aprobar if n in nombre_a_codigo]
+        aprobados += por_aprobar_codes
+
+    semestre_actual = ciclo_actual # o mejor (usar anio actual si lo tienes)
+
+    cursos_prox_ciclo = [
+        c for c in cursos 
+        if semestre_actual in c["semestre"]
+        and c["codigo"] not in aprobados
+        and all(pr in aprobados for pr in c["requisitos"])
+    ]
+
+
+    if len(cursos_prox_ciclo) < max_cursos:
+        cursos_alternativos = [
+            c for c in cursos
+            if c["codigo"] not in aprobados
+            and semestre_actual not in c["semestre"]
+            and all(pr in aprobados for pr in c["requisitos"])
+            and c not in cursos_prox_ciclo
+        ]
+        cursos_alternativos = ordenar_por_importancia(
+            [c["codigo"] for c in cursos_alternativos], cursos)
+        cursos_alternativos = [next(c for c in cursos if c["codigo"] == cod) 
+                             for cod in cursos_alternativos]
+
+        cursos_prox_ciclo.extend(cursos_alternativos[:max_cursos - len(cursos_prox_ciclo)])
+
+    cursos_ordenados = ordenar_por_importancia(
+        [c["codigo"] for c in cursos_prox_ciclo], cursos)
+    return [codigo_a_nombre[c] for c in cursos_ordenados[:max_cursos]]
+
+def validar_manual(cursos, seleccion_manual):
+    validos = []
+    for code in seleccion_manual:
+        curso = next(c for c in cursos if c["codigo"] == code)
+        if all(pr in seleccion_manual for pr in curso["requisitos"]):
+            validos.append(curso["nombre"])
+    return validos
+
+def ordenar_por_importancia(codigos, cursos):
+    def contar_dependencias(curso_codigo):
+        return sum(1 for c in cursos if curso_codigo in c["requisitos"])
+    return sorted(codigos, key=contar_dependencias, reverse=True)
+
 def construir_grafo(cursos):
     G = nx.DiGraph()
-    for c in cursos:
-        G.add_node(c["codigo"], label=c["nombre"])
-        for pr in c["prerequisitos"]:
-            G.add_edge(pr, c["codigo"])
+    for curso in cursos:
+        G.add_node(curso["codigo"], label=curso["nombre"])
+        for prereq in curso["requisitos"]:
+            G.add_edge(prereq, curso["codigo"])
     return G
 
-def mostrar_grafo_pyvis(G, output="grafo.html"):
-    """
-    Genera un archivo HTML con la visualización del grafo PyVis
-    sin usar el modo notebook (evita errores de template).
-    Devuelve la ruta al archivo generado.
-    """
-    from pyvis.network import Network
+def mostrar_grafo_pyvis(G, aprobados=[]):
+    net = Network(height="750px", width="100%", directed=True)
+    for node in G.nodes(data=True):
+        color = "#2E86AB" if node[0] in aprobados else "#F18F01"
+        net.add_node(node[0], label=node[1]['label'], color=color)
 
-    # Crear red dirigida con tamaño fijo
-    net = Network(height="600px", width="100%", directed=True)
-    net.from_nx(G)
+    for source, target in G.edges():
+        net.add_edge(source, target)
 
-    # Escribir HTML sin intentar abrir navegador ni modo notebook
-    net.write_html(output, open_browser=False, notebook=False)
-    return output
-
+    net.set_options("""
+    var options = {
+      "nodes": {
+        "font": {
+          "size": 16
+        }
+      },
+      "edges": {
+        "arrows": {
+          "to": {
+            "enabled": true
+          }
+        }
+      },
+      "physics": {
+        "enabled": true,
+        "barnesHut": {
+          "gravitationalConstant": -12000,
+          "centralGravity": 0.3,
+          "springLength": 95
+        }
+      }
+    }
+    """)
+    path = "grafo.html"
+    net.save_graph(path)
+    return path
 
 def alertas_riesgo(plan, max_cursos):
-    avisos = []
+    alertas = []
     for etapa in plan:
-        if len(etapa["cursos"]) < max_cursos:
-            avisos.append(
-                f"Ciclo {etapa['ciclo']}: riesgo de atraso (solo {len(etapa['cursos'])} cursos)."
-            )
-    return avisos
+        if len(etapa["cursos"]) > max_cursos:
+            alertas.append(f"El ciclo {etapa['ciclo']} excede el máximo de {max_cursos} cursos.")
+    return alertas
 
 def predecir_graduacion(cursos, aprobados_nombres, ciclo_actual, max_cursos):
-    from simulador import simular_avance
+    restantes = [c for c in cursos if c["nombre"] not in aprobados_nombres]
+    if not restantes:
+        return "Graduado"
 
-    plan = simular_avance(cursos, aprobados_nombres, ciclo_actual, max_cursos, n_ciclos=20)
-    acumulado = set(aprobados_nombres)
-    total = set(c["nombre"] for c in cursos)
-    for etapa in plan:
-        acumulado.update(etapa["cursos"])
-        if total <= acumulado:
-            return etapa["ciclo"]
-    return None
+    historial = set(c["nombre"] for c in cursos if c["nombre"] in aprobados_nombres)
+    ciclo = ciclo_actual
+    ciclos_usados = 0
 
-
-def ruta_optima_vs_plan_ideal(cursos, plan_ideal, aprobados_codigos, ciclo_absoluto, max_cursos, n_ciclos=20):
-    curso_dict = {c["codigo"]: c for c in cursos}
-    plan_por_curso = {
-        codigo: (bloque["anio"], bloque["semestre"])
-        for bloque in plan_ideal
-        for codigo in bloque["cursos"]
-    }
-
-    historial = set(aprobados_codigos)
-    plan = []
-
-    for ciclo_index in range(ciclo_absoluto, ciclo_absoluto + n_ciclos):
-        semestre = 1 if ciclo_index % 2 == 1 else 2
-
-        dispo = [
-            c for c in cursos
-            if semestre in c["semestre"] and c["codigo"] not in historial
+    while restantes and ciclos_usados < 12:
+        posibles = [
+            c for c in restantes
+            if all(pr in [cur["codigo"] for cur in cursos if cur["nombre"] in historial] for pr in c["requisitos"])
+            and ciclo in c["semestre"]
         ]
-        elegibles = [
-            c for c in dispo
-            if all(pr in historial for pr in c["prerequisitos"])
-        ]
+        seleccion = ordenar_por_importancia([c["codigo"] for c in posibles], cursos)[:max_cursos]
+        if not seleccion:
+            ciclo = 2 if ciclo == 1 else 1
+            ciclos_usados += 1
+            continue
+        historial.update(c["nombre"] for c in cursos if c["codigo"] in seleccion)
+        restantes = [c for c in restantes if c["nombre"] not in historial]
+        ciclo = 2 if ciclo == 1 else 1
+        ciclos_usados += 1
 
-        seleccion = [c["codigo"] for c in elegibles][:max_cursos]
-        plan.append({"ciclo": ciclo_index, "cursos": seleccion})
-        historial.update(seleccion)
-
-        if len(historial) == len(cursos):
-            break
-
-    # Comparar contra plan ideal
-    cursos_simulados = {}
-    for etapa in plan:
-        for c in etapa["cursos"]:
-            cursos_simulados[c] = etapa["ciclo"]
-
-    retrasados = []
-    for c, (anio, semestre) in plan_por_curso.items():
-        ciclo_ideal = (anio - 1) * 2 + semestre
-        ciclo_real = cursos_simulados.get(c)
-        if ciclo_real is not None and ciclo_real > ciclo_ideal:
-            retrasados.append({
-                "codigo": c,
-                "nombre": curso_dict[c]["nombre"],
-                "ciclo_ideal": ciclo_ideal,
-                "ciclo_real": ciclo_real
-            })
-
-    return plan, retrasados
+    if restantes:
+        return None
+    return f"Semestre {2023 + (ciclos_usados // 2)}-{(ciclos_usados % 2) + 1}"
