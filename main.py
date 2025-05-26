@@ -5,7 +5,7 @@ import time
 import streamlit as st
 import pandas as pd
 from utils import cargar_cursos, cursos_validos, validar_manual
-from simulador import simular_avance
+
 from utils import construir_grafo, mostrar_grafo_pyvis, alertas_riesgo, predecir_graduacion
 import datetime
 from csp_solver import (
@@ -13,6 +13,7 @@ from csp_solver import (
     contador_backtracks,
     contador_nodos
 )
+from simulador import simular_avance, simular_avance_csp
 
 
 # Configuración de la página
@@ -328,150 +329,63 @@ if pagina == "📋 Mi Progreso y Planificación":
     st.markdown('<div class="subheader"><h2>🤖 Recomendación Inteligente</h2></div>', unsafe_allow_html=True)
     
     modo_recomendacion = st.radio(
-        "**Modo de recomendación:**",
-        ["Solo próximo ciclo", "🧠 Recomendación por IA (CSP)"],
-        horizontal=True,
-        help="Elige cómo deseas que el sistema te ayude a planificar"
-    )
+    "Modo de recomendación:",
+    ["Solo próximo ciclo", "🧠 Greedy completo", "🔄 CSP completo"],
+    horizontal=True
+)
+
     
     if st.button("🎯 Generar Recomendación", use_container_width=True, key="btn_recomendar"):
-        aprobados_nombres = [nombres_por_codigo[c] for c in aprobados_codigos if c in nombres_por_codigo]
-        
-        if modo_recomendacion == "Solo próximo ciclo":
-            recomendados = cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos)
-            
-            if recomendados:
-                st.success("### 📋 Cursos recomendados para el próximo ciclo:")
-                
-                # Mostrar como tarjetas
-                cols = st.columns(2)
-                for i, curso in enumerate(recomendados):
-                    with cols[i % 2]:
-                        curso_info = next(c for c in cursos if c["nombre"] == curso)
-                        st.markdown(f"""
-                        <div class="course-card">
-                            <strong>{curso_info['codigo']}</strong><br>
-                            {curso}<br>
-                            <small>Año: {curso_info['anio']} | Ciclo: {curso_info['ciclo']} | Créditos: {curso_info.get('creditos', 0)}</small>
-                        </div>
-                        """, unsafe_allow_html=True)
-                
-                # Mostrar también como tabla
-                df_recomendados = pd.DataFrame([{
-                    "Código": c["codigo"],
-                    "Nombre": c["nombre"],
-                    "Año": c["anio"],
-                    "Ciclo": c["ciclo"],
-                    "Créditos": c.get("creditos", 0)
-                } for c in cursos if c["nombre"] in recomendados])
-                
-                st.dataframe(df_recomendados, use_container_width=True, hide_index=True)
-            else:
-                st.warning("😕 No hay cursos válidos disponibles para el próximo ciclo con los requisitos actuales.")
-        elif modo_recomendacion == "🧠 Recomendación por IA (CSP)":
-            from csp_solver import planificar_toda_la_carrera, contador_backtracks, contador_nodos
-            from csp_solver import planificar_ciclo_unico, planificar_toda_la_carrera
-            st.info("Aplicando recomendación basada en IA (CSP)...")
+            aprobados_nombres = [nombres_por_codigo[c] for c in aprobados_codigos]
+            start_year = datetime.datetime.now().year
 
-            if st.checkbox("📘 Simular toda la carrera con CSP"):
-                from csp_solver import contador_backtracks, contador_nodos
-                contador_backtracks = 0
-                contador_nodos = 0
-
-                start = time.time()
-                plan = planificar_toda_la_carrera(cursos, aprobados_codigos, ciclo_actual, max_cursos)
-                elapsed = time.time() - start
-
-                if plan:
-                    for etapa in plan:
-                        with st.expander(f"Ciclo {etapa['ciclo']}", expanded=False):
-                            df = pd.DataFrame([{
-                                "Código": c["codigo"],
-                                "Nombre": c["nombre"],
-                                "Año": c["anio"],
-                                "Ciclo": c["ciclo"],
-                                "Créditos": c.get("creditos", 0)
-                            } for c in etapa["cursos"]])
-                            st.dataframe(df, use_container_width=True, hide_index=True)
-                    st.subheader("📊 Métricas de CSP")
-                    st.metric("Tiempo de ejecución (s)", f"{elapsed:.3f}")
-                    st.metric("Backtracks", contador_backtracks)
-                    st.metric("Nodos expandidos", contador_nodos)
+            # 1) Solo próximo ciclo
+            if modo_recomendacion == "Solo próximo ciclo":
+                recomendados = cursos_validos(cursos, aprobados_nombres, ciclo_actual, max_cursos)
+                if recomendados:
+                    st.success("📋 Cursos para el próximo ciclo:")
+                    st.dataframe(
+                        pd.DataFrame(recomendados, columns=["Curso"]),
+                        use_container_width=True
+                    )
                 else:
-                    st.error("No se pudo encontrar una planificación válida con CSP.")
-            else:
-                cursos_ciclo = planificar_ciclo_unico(cursos, aprobados_codigos, ciclo_actual, max_cursos)
-                if cursos_ciclo:
-                    df = pd.DataFrame([{
-                        "Código": c["codigo"],
-                        "Nombre": c["nombre"],
-                        "Año": c["anio"],
-                        "Ciclo": c["ciclo"],
-                        "Créditos": c.get("creditos", 0)
-                    } for c in cursos_ciclo])
-                    st.success("📋 Cursos recomendados para el próximo ciclo (CSP):")
-                    st.dataframe(df, use_container_width=True, hide_index=True)
-                else:
-                    st.warning("No hay cursos válidos según CSP para el próximo ciclo.")
-            # 🗓️ Pedir al usuario el año académico de inicio
-            start_year = st.number_input(
-                "🗓️ Año académico de inicio para la simulación",
-                min_value=2000,
-                max_value=2100,
-                value=datetime.datetime.now().year,
-                step=1,
-                help="Indica en qué año comenzará la simulación (p.ej. 2025)"
-            )
-            with st.spinner("Simulando plan de estudios..."):
-                plan = simular_avance(
-                    cursos,
-                    aprobados_nombres,
-                    ciclo_actual,
-                    max_cursos,
-                    start_year=start_year
+                    st.warning("😕 No hay cursos válidos para el próximo ciclo.")
+                plan_sim, back_sim, nodes_sim = None, 0, 0
+
+            # 2) Greedy completo
+            elif modo_recomendacion == "🧠 Greedy completo":
+                plan_sim = simular_avance(
+                    cursos, aprobados_nombres, ciclo_actual, max_cursos, start_year
                 )
-            if plan:
-                st.success("### 🧭 Plan de avance sugerido:")
-                año_termino = plan[-1]["año"]
-                st.metric("🗓️ Año estimado de fin de carrera", año_termino)   
-                
-                for i, etapa in enumerate(plan):
-                    with st.expander(f"📌 Ciclo {etapa['ciclo']} — Año {etapa['año']}", expanded=i<2):
-                        if etapa["cursos"]:
-                            # Mostrar métricas rápidas
-                            cols = st.columns(3)
-                            with cols[0]:
-                                st.metric("Cursos", len(etapa["cursos"]))
-                            with cols[1]:
-                                creditos = sum(c.get("creditos", 0) for c in cursos if c["nombre"] in etapa["cursos"])
-                                st.metric("Total créditos", creditos)
-                            with cols[2]:
-                                dificultad = sum(len(c["requisitos"]) for c in cursos if c["nombre"] in etapa["cursos"])
-                                st.metric("Dificultad relativa", dificultad)
-                            
-                            # Mostrar cursos como tarjetas
-                            for curso in etapa["cursos"]:
-                                curso_info = next(c for c in cursos if c["nombre"] == curso)
-                                st.markdown(f"""
-                                <div class="course-card">
-                                    <strong>{curso_info['codigo']}</strong><br>
-                                    {curso}<br>
-                                    <small>Año: {curso_info['anio']} | Créditos: {curso_info.get('creditos', 0)}</small>
-                                </div>
-                                """, unsafe_allow_html=True)
-                         
-                                     
-                        else:
-                            st.info("No hay cursos disponibles para este ciclo según los requisitos.")
-                
-                # Mostrar alertas
-                avisos = alertas_riesgo(plan, max_cursos)
-                if avisos:
-                    st.warning("### ⚠️ Alertas importantes:")
-                    for aviso in avisos:
-                        st.markdown(f"- {aviso}")
-            else:
-                st.error("No se pudo generar un plan de avance con los parámetros actuales.")
+                back_sim, nodes_sim = 0, 0
+
+            # 3) CSP completo
+            else:  # "🔄 CSP completo"
+                plan_sim, back_sim, nodes_sim = simular_avance_csp(
+                    cursos, aprobados_nombres, ciclo_actual, max_cursos, start_year
+                )
+
+            # Mostrar métricas para los modos completos
+            if modo_recomendacion in ("🧠 Greedy completo", "🔄 CSP completo"):
+                st.subheader("📊 Métricas de simulación")
+                st.metric("🔄 Backtracks", back_sim)
+                st.metric("🔎 Nodos explorados", nodes_sim)
+
+                # Mostrar plan
+                if plan_sim is None:
+                    st.error("❌ No se pudo generar un plan.")
+                elif not plan_sim:
+                    st.info("✅ ¡No quedan cursos pendientes!")
+                else:
+                    for etapa in plan_sim:
+                        with st.expander(f"Ciclo {etapa['ciclo']} — Año {etapa['año']}"):
+                            df = pd.DataFrame([{"Curso": n} for n in etapa["cursos"]])
+                            st.dataframe(
+                                df,
+                                hide_index=True,
+                                use_container_width=True
+                            )
+
 
     # ——————————————————————————————————————
 # 🔗 Grafo de prerequisitos (en la misma página)

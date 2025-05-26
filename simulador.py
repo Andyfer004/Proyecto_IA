@@ -1,4 +1,5 @@
 from collections import defaultdict
+from csp_solver import planificar_toda_la_carrera
 
 def contar_dependencias(curso_codigo, cursos):
     return sum(1 for c in cursos if curso_codigo in c["requisitos"])
@@ -72,3 +73,37 @@ def simular_avance(cursos, aprobados_nombres, ciclo_actual, max_cursos, start_ye
         restantes = [c for c in cursos if c["codigo"] not in historial]
 
     return plan
+
+def simular_avance_csp(cursos, aprobados_nombres, ciclo_inicial, max_cursos, start_year):
+    # 1) Convierte nombres aprobados a códigos
+    nombre_a_codigo   = { c["nombre"]: c["codigo"] for c in cursos }
+    aprobados_codigos = {
+        nombre_a_codigo[n]
+        for n in aprobados_nombres
+        if n in nombre_a_codigo
+    }
+
+    # 2) Llama al solver CSP que ya devuelve (plan, backtracks, nodos)
+    plan_csp, backtracks, nodos = planificar_toda_la_carrera(
+        cursos, aprobados_codigos, ciclo_inicial, max_cursos
+    )
+
+    # 3) Reconstruye el formato con años y ciclos
+    plan = []
+    year  = start_year
+    cycle = ciclo_inicial
+    for etapa in plan_csp:
+        detalles = etapa["cursos"]
+        plan.append({
+            "ciclo":    etapa["ciclo"],
+            "año":      year,
+            "cursos":   [c["nombre"] for c in detalles],
+            "detalles": detalles,
+            "creditos": sum(c.get("creditos",0) for c in detalles)
+        })
+        cycle = 2 if cycle == 1 else 1
+        if cycle == ciclo_inicial:
+            year += 1
+
+    # 4) Devuelve siempre tres valores
+    return plan, backtracks, nodos

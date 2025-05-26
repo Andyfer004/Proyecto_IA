@@ -78,21 +78,23 @@ def planificar_ciclo_unico(cursos, aprobados_codigos, ciclo_actual, max_cursos):
     return seleccion
 
 def planificar_toda_la_carrera(cursos, aprobados_codigos, ciclo_actual, max_cursos, total_ciclos=12):
+    global contador_backtracks, contador_nodos
+    contador_backtracks = 0
+    contador_nodos      = 0
+
     pendientes = [c for c in cursos if c["codigo"] not in aprobados_codigos]
-    codigos_pendientes = [c["codigo"] for c in pendientes]
-    historial = set(aprobados_codigos)
+    cod_pend   = [c["codigo"] for c in pendientes]
+    dominio    = { c["codigo"]: c["semestre"] for c in pendientes }
 
-    dominio = {
-        c["codigo"]: c["semestre"]
-        for c in pendientes
-    }
+    asign = backtracking({}, cursos, cod_pend, dominio, ciclo_actual, max_cursos, total_ciclos)
+    # SI FALLA, asign será None, devolvemos métricas igualmente
+    if not asign:
+        return [], contador_backtracks, contador_nodos
 
-    asignaciones = backtracking({}, cursos, codigos_pendientes, dominio, ciclo_actual, max_cursos, total_ciclos)
-    if not asignaciones:
-        return []
-
+    # Si funciona, construimos el plan como lista de dicts
+    from collections import defaultdict
     ciclos = defaultdict(list)
-    for cod, ciclo in asignaciones.items():
+    for cod, ciclo in asign.items():
         curso = next(c for c in cursos if c["codigo"] == cod)
         ciclos[ciclo].append(curso)
 
@@ -103,4 +105,4 @@ def planificar_toda_la_carrera(cursos, aprobados_codigos, ciclo_actual, max_curs
             "cursos": sorted(ciclos[ciclo], key=lambda c: (c["anio"], c["ciclo"], c["nombre"]))
         })
 
-    return resultado
+    return resultado, contador_backtracks, contador_nodos
