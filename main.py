@@ -330,7 +330,7 @@ if pagina == "📋 Mi Progreso y Planificación":
     
     modo_recomendacion = st.radio(
     "Modo de recomendación:",
-    ["Solo próximo ciclo", "🧠 Greedy completo"],
+    ["Solo próximo ciclo", "🧠 Greedy completo","🧠 Recomendación por IA (CSP)"],
     horizontal=True
 )
 
@@ -351,6 +351,23 @@ if pagina == "📋 Mi Progreso y Planificación":
                 else:
                     st.warning("😕 No hay cursos válidos para el próximo ciclo.")
                 plan_sim, back_sim, nodes_sim = None, 0, 0
+
+            elif modo_recomendacion == "🧠 Recomendación por IA (CSP)":
+                from csp_solver import planificar_ciclo_unico, planificar_toda_la_carrera
+                st.info("Aplicando recomendación basada en IA (CSP)...")
+                cursos_ciclo = planificar_ciclo_unico(cursos, aprobados_codigos, ciclo_actual, max_cursos)
+                if cursos_ciclo:
+                    df = pd.DataFrame([{
+                    "Código": c["codigo"],
+                    "Nombre": c["nombre"],
+                    "Año": c["anio"],
+                    "Ciclo": c["ciclo"],
+                    "Créditos": c.get("creditos", 0)
+                    } for c in cursos_ciclo])
+                    st.success("📋 Cursos recomendados para el próximo ciclo (CSP):")
+                    st.dataframe(df, use_container_width=True, hide_index=True)
+                else:
+                    st.warning("No hay cursos válidos según CSP para el próximo ciclo.")
 
             # 2) Greedy completo
             elif modo_recomendacion == "🧠 Greedy completo":
